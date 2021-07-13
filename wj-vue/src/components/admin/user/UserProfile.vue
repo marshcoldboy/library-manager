@@ -100,6 +100,7 @@
               编辑
             </el-button>
             <el-button
+              @click="deleteUser(scope.row)"
               type="text"
               size="small">
               移除
@@ -210,6 +211,26 @@
             roleIds.push(user.roles[i].id)
           }
           this.selectedRolesIds = roleIds
+        },
+        deleteUser (user) {
+          this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+              this.$axios
+                .post('/admin/user/UserProfile/delete', {username: user.username}).then(resp => {
+                if (resp && resp.data.code === 200) {
+                  this.listUsers()
+                }
+              })
+            }
+          ).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
         },
         resetPassword (username) {
           this.$axios.put('/admin/user/password', {
