@@ -42,7 +42,7 @@
       <el-table
         :data="users"
         stripe
-        :default-sort = "{prop: 'id', order: 'ascending'}"
+        :default-sort = "{prop: 'uid', order: 'ascending'}"
         style="width: 100%"
         :max-height="tableHeight">
         <el-table-column

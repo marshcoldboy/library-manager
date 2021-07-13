@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class UserDTO implements OutputConverter<UserDTO, User> {
 
-    private int id;
+    private int uid;
 
     private String username;
 

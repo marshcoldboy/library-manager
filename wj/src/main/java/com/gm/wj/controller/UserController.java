@@ -1,5 +1,6 @@
 package com.gm.wj.controller;
 
+import com.gm.wj.dto.UserDTO;
 import com.gm.wj.entity.*;
 import com.gm.wj.result.Result;
 import com.gm.wj.result.ResultFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * User controller.
@@ -25,7 +27,8 @@ public class UserController {
 
     @GetMapping("/api/admin/user")
     public Result listUsers() {
-        return ResultFactory.buildSuccessResult(userService.list());
+        List<UserDTO> userDTOS=userService.list();
+        return ResultFactory.buildSuccessResult(userDTOS);
     }
 
     @PutMapping("/api/admin/user/status")
