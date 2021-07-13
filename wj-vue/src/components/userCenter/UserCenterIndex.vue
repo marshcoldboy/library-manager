@@ -59,8 +59,9 @@ export default {
       dialogFormVisible: false
     }
   },
-  mounted () { // 给window添加一个滚动滚动监听事件
-    window.addEventListener('scroll', this.handleScroll)// this.loadUser()
+  mounted () {
+    this.loadUser()// 给window添加一个滚动滚动监听事件
+    window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
     handleScroll () { // 改变元素的top值
