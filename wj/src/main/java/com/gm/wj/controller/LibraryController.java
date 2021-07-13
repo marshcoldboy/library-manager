@@ -29,7 +29,7 @@ public class LibraryController {
     @Autowired
     BookBorrowService bookBorrowService;
 
-    @PostMapping("/api/BookInfo")
+    @PostMapping("/api/BookBorrow")
     public Result subscribe(@RequestBody @Valid String bookID){
 
         System.out.println(bookID);

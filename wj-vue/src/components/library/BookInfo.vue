@@ -28,7 +28,7 @@
             <el-col :span="12" offset="2"><div class="price">价格：  {{book.price}}</div></el-col>
           </el-row>
           <el-row :gutter="20">
-            <el-col :span="12" offset="2"><div class="ISBN">ISBN： {{book.ISBN}}</div></el-col>
+            <el-col :span="12" offset="2"><div class="ISBN">ISBN： {{book.isbn}}</div></el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="16" offset="2"><div class="abstract bg-purple">
@@ -58,7 +58,7 @@ export default {
         cover: '',
         title: '',
         author: '',
-        ISBN: '',
+        isbn: '',
         press: '',
         price: '',
         abs: ''
@@ -81,7 +81,8 @@ export default {
     },
     borrow (book) {
       // var _this = this
-      this.$axios.post('/BookInfo', {
+      this.$axios.post('/BookBorrow', {
+          book: book,
           bookID: this.book.bid,
           userID: this.$store.state.username
         }).then(successResponse => {
