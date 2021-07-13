@@ -126,4 +126,6 @@ public class UserService {
     public void deleteById(int id) {
         userDAO.deleteById(id);
     }
+
+    public void deleteByUsername(String username){userDAO.deleteByUsername(username);}
 }

@@ -53,4 +53,14 @@ public class UserController {
     public Result userInformation(@RequestBody @Valid String userName){
         return ResultFactory.buildSuccessResult(userService.findByUsername(userName));
     }
+
+    @PostMapping("/api/admin/user/delete")
+    public Result userDelete(@RequestBody @Valid User user){
+        System.out.println(user);
+        userService.deleteByUsername(user.getUsername());
+        if(userService.findByUsername(user.getUsername())==null)
+            return ResultFactory.buildSuccessResult("成功删除用户");
+        else
+            return ResultFactory.buildFailResult("删除出错");
+    }
 }

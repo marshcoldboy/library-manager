@@ -50,7 +50,7 @@
           width="55">
         </el-table-column>
         <el-table-column
-          prop="id"
+          prop="uid"
           label="id"
           sortable
           width="100">
@@ -219,7 +219,7 @@
             type: 'warning'
           }).then(() => {
               this.$axios
-                .post('/admin/user/UserProfile/delete', {username: user.username}).then(resp => {
+                .post('/admin/user/delete', {username: user.username}).then(resp => {
                 if (resp && resp.data.code === 200) {
                   this.listUsers()
                 }
