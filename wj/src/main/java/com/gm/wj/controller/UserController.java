@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -24,6 +25,9 @@ public class UserController {
     UserService userService;
     @Autowired
     AdminUserRoleService adminUserRoleService;
+
+    @Autowired
+    BarCodeService barCodeService;
 
     @GetMapping("/api/admin/user")
     public Result listUsers() {
@@ -50,9 +54,11 @@ public class UserController {
     }
 
     @PostMapping("/api/user-information")
-    public Result userInformation(@RequestBody @Valid User user){
+    public Result userInformation(@RequestBody @Valid User user) throws Exception {
         User return_user=userService.findByUsername(user.getUsername());
-        System.out.println(return_user);
+        barCodeService.generateBarCode("123456");
+
+        barCodeService.readBarCode();
         return ResultFactory.buildSuccessResult(return_user);
     }
 

@@ -42,6 +42,16 @@
               </el-container>
             </div></el-col>
           </el-row>
+          <el-row :gutter="20" >
+            <el-col :span="12" offset="2"><div>条形码：
+              <el-image class="Barcode-card"
+                        style="width: 200px; height: 120px"
+                        :src="book.barcode"
+                        fit="scale-down">
+              </el-image>
+            </div>
+            </el-col>
+          </el-row>
         </el-main>
       </el-container>
     </el-container>
@@ -61,7 +71,8 @@ export default {
         isbn: '',
         press: '',
         price: '',
-        abs: ''
+        abs: '',
+        barcode: ''
       }
     }
   },
