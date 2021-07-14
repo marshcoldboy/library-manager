@@ -7,7 +7,7 @@
       @close="clear">
       <el-form v-model="form" style="text-align: left" ref="dataForm">
         <el-form-item label="书名" :label-width="formLabelWidth" prop="title">
-          <el-input v-model="form.title" autocomplete="off" placeholder="不加《》"></el-input>
+          <el-input v-model="form.title" autocomplete="off" placeholder="不加《》" ></el-input>
         </el-form-item>
         <el-form-item label="作者" :label-width="formLabelWidth" prop="author">
           <el-input v-model="form.author" autocomplete="off"></el-input>
@@ -16,7 +16,7 @@
           <el-input v-model="form.press" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="ISBN" :label-width="formLabelWidth" prop="ISBN">
-          <el-input v-model="form.ISBN" autocomplete="off"></el-input>
+          <el-input v-model="form.isbn" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="封面" :label-width="formLabelWidth" prop="cover">
           <el-input v-model="form.cover" autocomplete="off" placeholder="图片 URL"></el-input>
@@ -25,9 +25,12 @@
         <el-form-item label="简介" :label-width="formLabelWidth" prop="abs">
           <el-input type="textarea" v-model="form.abs" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="价格" :label-width="formLabelWidth" prop="abs">
+          <el-input type="textarea" v-model="form.price" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="分类" :label-width="formLabelWidth" prop="cid">
-        <el-select v-model="form.category.id" placeholder="请选择分类">
-          <el-option label="文学" value="1"></el-option>
+        <el-select v-model="form.category.cid" placeholder="请选择分类"  >
+          <el-option  label="文学" value="1" key="文学"></el-option>
           <el-option label="流行" value="2"></el-option>
           <el-option label="文化" value="3"></el-option>
           <el-option label="生活" value="4"></el-option>
@@ -59,14 +62,13 @@
           id: '',
           title: '',
           author: '',
-          date: '',
           press: '',
-          ISBN: '',
+          isbn: '',
           cover: '',
           abs: '',
-          cid: '',
+          price: '',
           category: {
-            id: '',
+            cid: '',
             name: ''
           }
         },
@@ -82,11 +84,11 @@
           author: '',
           date: '',
           press: '',
-          ISBN: '',
+          isbn: '',
           cover: '',
           abs: '',
           category: {
-            id: '',
+            cid: '',
             name: ''
           }
         }
@@ -100,8 +102,9 @@
             author: this.form.author,
             date: this.form.date,
             press: this.form.press,
-            ISBN: this.form.ISBN,
+            isbn: this.form.isbn,
             abs: this.form.abs,
+            price: this.form.price,
             category: this.form.category
           }).then(resp => {
             if (resp && resp.data.code === 200) {

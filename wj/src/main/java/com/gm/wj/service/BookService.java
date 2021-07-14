@@ -53,17 +53,17 @@ public class BookService {
 //    }
 
     public void addOrUpdate(Book book) {
-        redisService.delete("booklist");
-        bookDAO.save(book);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        redisService.delete("booklist");
+//        redisService.delete("booklist");
+        bookDAO.saveAndFlush(book);
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        redisService.delete("booklist");
     }
 
-    public void deleteById(int bid) {
+    public void deleteByBid(int bid) {
 //        redisService.delete("booklist");
         bookDAO.deleteByBid(bid);
 //        try {

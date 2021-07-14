@@ -1,11 +1,12 @@
 package com.gm.wj.controller;
 
 import com.gm.wj.entity.Book;
-import com.gm.wj.entity.User;
+import com.gm.wj.entity.Category;
 import com.gm.wj.result.Result;
 import com.gm.wj.result.ResultFactory;
 import com.gm.wj.service.BookBorrowService;
 import com.gm.wj.service.BookService;
+import com.gm.wj.service.CategoryService;
 import com.gm.wj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,9 @@ public class LibraryController {
     @Autowired
     BookBorrowService bookBorrowService;
 
+    @Autowired
+    CategoryService categoryService;
+
     @PostMapping("/api/BookBorrow")
     public Result subscribe(@RequestBody @Valid String bookID){
 
@@ -44,6 +48,8 @@ public class LibraryController {
 
     @PostMapping("/api/admin/content/books")
     public Result addOrUpdateBooks(@RequestBody @Valid Book book) {
+        Category category=categoryService.get(book.getCategory().getCid());
+        book.setCategory(category);
         bookService.addOrUpdate(book);
         return ResultFactory.buildSuccessResult("修改成功");
     }
@@ -51,7 +57,7 @@ public class LibraryController {
     @PostMapping("/api/admin/content/books/delete")
     public Result deleteBook(@RequestBody @Valid Book book) {
         System.out.println(book.toString());
-        bookService.deleteById(71);
+        bookService.deleteByBid(book.getBid());
         return ResultFactory.buildSuccessResult("删除成功");
     }
 

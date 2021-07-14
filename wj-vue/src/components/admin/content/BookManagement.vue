@@ -123,16 +123,16 @@
       editBook (item) {
         this.$refs.edit.dialogFormVisible = true
         this.$refs.edit.form = {
-          id: item.bid,
+          bid: item.bid,
           cover: item.cover,
           title: item.title,
           author: item.author,
-          ISBN: item.ISBN,
+          isbn: item.isbn,
           price: item.price,
           press: item.press,
           abs: item.abs,
           category: {
-            id: item.category.id.toString(),
+            cid: item.category.cid.toString(),
             name: item.category.name
           }
         }

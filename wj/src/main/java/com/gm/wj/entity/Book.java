@@ -40,7 +40,8 @@ public class Book {
      */
     private String press;
 
-    private String ISBN;
+    @Column(name="ISBN")
+    private String isbn;
 
     private int price;
 
