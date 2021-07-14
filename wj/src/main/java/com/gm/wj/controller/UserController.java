@@ -55,11 +55,7 @@ public class UserController {
 
     @PostMapping("/api/user-information")
     public Result userInformation(@RequestBody @Valid User user) throws Exception {
-        User return_user=userService.findByUsername(user.getUsername());
-        barCodeService.generateBarCode("123456");
-
-        barCodeService.readBarCode();
-        return ResultFactory.buildSuccessResult(return_user);
+        return ResultFactory.buildSuccessResult(userService.findByUsername(user.getUsername()));
     }
 
     @PostMapping("/api/admin/user/delete")

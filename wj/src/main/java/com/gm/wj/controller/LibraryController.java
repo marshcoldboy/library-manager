@@ -56,7 +56,6 @@ public class LibraryController {
 
     @PostMapping("/api/admin/content/books/delete")
     public Result deleteBook(@RequestBody @Valid Book book) {
-        System.out.println(book.toString());
         bookService.deleteByBid(book.getBid());
         return ResultFactory.buildSuccessResult("删除成功");
     }
