@@ -4,7 +4,7 @@
       :default-active="currentPath"
       router
       mode="horizontal"
-      background-color="white"
+      background-color="snow"
       text-color="#222"
       active-text-color="red"
       style="min-width: 1300px">

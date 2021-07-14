@@ -17,7 +17,7 @@
   .quick-nav {
     width: 303px;
     height: 318px;
-    background-color: transparent;
+    background: transparent;
   }
 
   .readme {

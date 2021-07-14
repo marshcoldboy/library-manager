@@ -5,8 +5,8 @@
     </div>
     <div class="block">
       <el-timeline>
-        <el-timeline-item timestamp="2021/7/21" placement="top">
-          <el-card>
+        <el-timeline-item id="time" timestamp="2021/7/21" placement="top" color="snow">
+          <el-card class="card-in">
             <h4>实现第一部分基本功能</h4>
             <p>42 提交于 2021/7/21 15:50</p>
           </el-card>
@@ -28,5 +28,19 @@
     width: 988px;
     height: 300px;
     text-align: left;
+    background: rgba(0,0,0,0.3);
+  }
+  .clearfix {
+    color: powderblue;
+  }
+  .block {
+    color: snow;
+  }
+  #time {
+    color: snow;
+  }
+  .card-in {
+    background: rgba(0,0,0,0.1);
+    color: snow;
   }
 </style>

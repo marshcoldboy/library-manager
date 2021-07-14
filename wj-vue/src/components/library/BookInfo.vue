@@ -31,7 +31,8 @@
             <el-col :span="12" offset="2"><div class="ISBN">ISBN： {{book.isbn}}</div></el-col>
           </el-row>
           <el-row :gutter="20">
-            <el-col :span="16" offset="2"><div class="abstract bg-purple">
+            <el-col :span="16" offset="2">
+              <div class="abstract bg-purple">
               <el-container>
                 <el-aside width="40px" style="padding-left: 0;padding-top: 0">
                   <p class="abstract">简介: </p>
@@ -40,16 +41,7 @@
                   {{book.abs}}
                 </el-main>
               </el-container>
-            </div></el-col>
-          </el-row>
-          <el-row :gutter="20" >
-            <el-col :span="12" offset="2"><div>条形码：
-              <el-image class="Barcode-card"
-                        style="width: 200px; height: 120px"
-                        :src="book.barcode"
-                        fit="scale-down">
-              </el-image>
-            </div>
+              </div>
             </el-col>
           </el-row>
         </el-main>

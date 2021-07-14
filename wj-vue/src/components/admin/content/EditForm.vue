@@ -65,6 +65,7 @@
           press: '',
           isbn: '',
           cover: '',
+          barcode: '',
           abs: '',
           price: '',
           category: {
