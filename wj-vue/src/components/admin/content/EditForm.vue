@@ -22,10 +22,6 @@
           <el-input v-model="form.cover" autocomplete="off" placeholder="图片 URL"></el-input>
           <img-upload @onUpload="uploadImg" ref="imgUpload"></img-upload>
         </el-form-item>
-        <el-form-item label="条形码" :label-width="formLabelWidth" prop="barcode">
-          <el-input v-model="form.barcode" autocomplete="off" placeholder="图片 URL"></el-input>
-          <img-upload @onUpload="uploadImg" ref="imgUpload"></img-upload>
-        </el-form-item>
         <el-form-item label="简介" :label-width="formLabelWidth" prop="abs">
           <el-input type="textarea" v-model="form.abs" autocomplete="off"></el-input>
         </el-form-item>

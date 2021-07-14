@@ -2,8 +2,6 @@
   <div class="footer">
     <div style="border-top:1px #1F1F1F solid;">
       <p class="alt" style="color:#999; line-height:0">&copy; 版权所有：勇敢牛牛不怕困难 &nbsp;
-        <span>技术支持：</span>
-        <a href="" target="_blank" style="color:#999;">某人</a>
       </p>
     </div>
   </div>
@@ -43,7 +41,7 @@
     overflow: hidden;
     padding: 20px 0;
     width: 1160px;
-    margin: auto;
+    margin-left: auto;
   }
 
   .footer .alt .foot {

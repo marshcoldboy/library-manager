@@ -42,6 +42,6 @@
   #header-div {
     padding-bottom: 20px;
     padding-left: 5px;
-    background-color: white;
+    background-color: rgba(0,0,0,0.3);
   }
 </style>

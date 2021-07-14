@@ -44,18 +44,6 @@
               </div>
             </el-col>
           </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12" offset="2"><div class="ISBN">条形码：</div></el-col>
-          </el-row>
-          <el-row :gutter="20" >
-            <el-col :span="12" offset="2">
-              <div>
-              <img src="@/assets/img/barcode/CODE129.png"
-                   alt=""
-                   style="width: 200px; height: 120px">
-            </div>
-            </el-col>
-          </el-row>
         </el-main>
       </el-container>
     </el-container>
