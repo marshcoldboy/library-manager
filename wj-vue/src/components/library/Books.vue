@@ -10,7 +10,7 @@
         <p slot="content" style="font-size: 13px;margin-bottom: 6px">
           <span>{{item.author}}</span> /
           <span>{{item.price}}</span> /
-          <span>{{item.ISBN}}</span> /
+          <span>{{item.isbn}}</span> /
           <span>{{item.press}}</span>
         </p>
         <p slot="content" style="width: 300px" class="abstract">{{item.abs}}</p>

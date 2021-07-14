@@ -82,7 +82,7 @@ export default {
     loadUser () {
       var _this = this
       this.$axios.post('/user-information', {
-        userID: this.$store.state.username
+        username: this.$store.state.username
       }).then(resp => {
         if (resp && resp.data.code === 200) {
           _this.books = resp.data.result

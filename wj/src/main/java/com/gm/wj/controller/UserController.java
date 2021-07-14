@@ -50,8 +50,10 @@ public class UserController {
     }
 
     @PostMapping("/api/user-information")
-    public Result userInformation(@RequestBody @Valid String userName){
-        return ResultFactory.buildSuccessResult(userService.findByUsername(userName));
+    public Result userInformation(@RequestBody @Valid User user){
+        User return_user=userService.findByUsername(user.getUsername());
+        System.out.println(return_user);
+        return ResultFactory.buildSuccessResult(return_user);
     }
 
     @PostMapping("/api/admin/user/delete")
