@@ -101,11 +101,12 @@
       },
       onSubmit (user) {
         // 根据视图绑定的角色 id 向后端传送角色信息
-        this.$axios.put('/user-information/alterUser', {
+        this.$axios.post('/user-information/alterUser', {
           username: user.username,
           name: user.name,
           phone: user.phone,
-          email: user.email
+          email: user.email,
+          roles: user.roles
         }).then(resp => {
           if (resp && resp.data.code === 200) {
             this.$alert('用户信息修改成功')

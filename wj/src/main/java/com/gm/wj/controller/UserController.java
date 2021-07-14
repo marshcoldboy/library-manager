@@ -26,9 +26,6 @@ public class UserController {
     @Autowired
     AdminUserRoleService adminUserRoleService;
 
-    @Autowired
-    BarCodeService barCodeService;
-
     @GetMapping("/api/admin/user")
     public Result listUsers() {
         List<UserDTO> userDTOS=userService.list();
@@ -53,11 +50,6 @@ public class UserController {
         return ResultFactory.buildSuccessResult("修改用户信息成功");
     }
 
-    @PostMapping("/api/user-information")
-    public Result userInformation(@RequestBody @Valid User user) throws Exception {
-        return ResultFactory.buildSuccessResult(userService.findByUsername(user.getUsername()));
-    }
-
     @PostMapping("/api/admin/user/delete")
     public Result userDelete(@RequestBody @Valid User user){
         System.out.println(user);
@@ -66,5 +58,16 @@ public class UserController {
             return ResultFactory.buildSuccessResult("成功删除用户");
         else
             return ResultFactory.buildFailResult("删除出错");
+    }
+
+    @PostMapping("/api/user-information")
+    public Result userInformation(@RequestBody @Valid User user) throws Exception {
+        return ResultFactory.buildSuccessResult(userService.findByUsername(user.getUsername()));
+    }
+
+    @PostMapping("/api/user-information/alterUser")
+    public Result userInformationAlter(@RequestBody @Valid User alterUser){
+        userService.editUser(alterUser);
+        return ResultFactory.buildSuccessResult(null);
     }
 }

@@ -119,8 +119,8 @@ public class UserService {
         userInDB.setName(user.getName());
         userInDB.setPhone(user.getPhone());
         userInDB.setEmail(user.getEmail());
-        userDAO.save(userInDB);
-        adminUserRoleService.saveRoleChanges(userInDB.getUid(), user.getRoles());
+        userDAO.saveAndFlush(userInDB);
+        //adminUserRoleService.saveRoleChanges(userInDB.getUid(), user.getRoles());
     }
 
     public void deleteById(int id) {
