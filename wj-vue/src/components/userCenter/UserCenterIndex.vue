@@ -26,6 +26,11 @@
               width="200">
             </el-table-column>
             <el-table-column
+              prop="days"
+              label="归还剩余天数"
+              width="200">
+            </el-table-column>
+            <el-table-column
               fixed="right"
               label="操作"
               width="120">
@@ -148,7 +153,7 @@
             <p class="info">手机号：  {{user.phone}}</p>
             <p class="info">邮箱： {{user.email}}</p>
           </div>
-          <el-button style="position: absolute;margin-left: 800px;margin-top: -100px" type="primary" icon="el-icon-setting" @click="alertUser()">修改
+          <el-button style="position: absolute;margin-left: 800px;margin-top: -100px" type="primary" icon="el-icon-setting" @click="alterUser()">修改
           </el-button>
         </el-card>
       </div>
@@ -252,7 +257,7 @@
           }
         })
       },
-      alertUser () { // 更改用户信息
+      alterUser () { // 更改用户信息
         this.dialogFormVisible = true
       },
       bookReturn () { // 图书归还
