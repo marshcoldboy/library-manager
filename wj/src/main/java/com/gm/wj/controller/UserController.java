@@ -61,22 +61,4 @@ public class UserController {
         else
             return ResultFactory.buildFailResult("删除出错");
     }
-
-    @PostMapping("/api/user-information")
-    public Result userInformation(@RequestBody @Valid User user) throws Exception {
-        return ResultFactory.buildSuccessResult(userService.findByUsername(user.getUsername()));
-    }
-
-
-    @PostMapping("/api/borrow_information")
-    public Result borrowInformation(@RequestBody @Valid User user){
-        String username=user.getUsername();
-        return ResultFactory.buildSuccessResult(bookBorrowService.list(username));
-    }
-
-    @PostMapping("/api/user-information/alterUser")
-    public Result userInformationAlter(@RequestBody @Valid User alterUser){
-        userService.editUser(alterUser);
-        return ResultFactory.buildSuccessResult(null);
-    }
 }

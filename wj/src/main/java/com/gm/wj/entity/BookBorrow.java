@@ -6,7 +6,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name="book_borrow")
@@ -29,18 +28,30 @@ public class BookBorrow {
     @Column(name="enddate")
     Date enddate;
 
-    static public final SimpleDateFormat ft=new SimpleDateFormat("yyyy-MM-dd");
+    @Column(name="returndate")
+    Date returndate;
 
-    public BookBorrow(int bid, String title, Date startDate, Date endDate, String uid) {
-        this.borrow_id = bid;
-        this.title=title;
-        this.startdate = startDate;
-        this.enddate = endDate;
-        this.username = uid;
+    @Transient
+    int days;
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public BookBorrow(int borrow_id, String username, String title, Date startdate, Date enddate, Date returndate) {
+        this.borrow_id = borrow_id;
+        this.username = username;
+        this.title = title;
+        this.startdate = startdate;
+        this.enddate = enddate;
+        this.returndate = returndate;
     }
 
     public BookBorrow() {
-
     }
 
     public int getBorrow_id() {
@@ -81,5 +92,13 @@ public class BookBorrow {
 
     public void setUsername(String uid) {
         this.username = uid;
+    }
+
+    public Date getReturndate() {
+        return returndate;
+    }
+
+    public void setReturndate(Date returndate) {
+        this.returndate = returndate;
     }
 }
