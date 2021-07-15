@@ -5,21 +5,116 @@
       <div id="current-borrow">
         <el-card class="menu" >
           <i class="el-icon-reading"/>
-          当前借阅</el-card>
+          当前借阅
+          <el-table
+            :data="bookborrow"
+            style="width: 100%"
+            max-height="250">
+            <el-table-column
+              prop="title"
+              label="书名"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="startdate"
+              label="借阅日期"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="enddate"
+              label="预定归还日期"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="120">
+              <template slot-scope="scope">
+                <el-button
+                  @click="bookReturn"
+                  type="text"
+                  size="small">
+                  归还
+                </el-button>
+                <el-button
+                  @click="bookRenew"
+                  type="text"
+                  size="small">
+                  续借
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </div>
       <div id="borrow-history">
         <el-card class="menu">
           <i class="el-icon-s-fold"/>
           借阅历史
-          <div style="margin-top: 25px;margin-left: 33px">
-            <p class="info">用户名: {{bookborrow[0].username}} 书名: {{bookborrow[0].title}} 借书时间: {{bookborrow[0].startdate}} 归还时间: {{bookborrow[0].enddate}}</p>
-          </div>
+          <el-table
+            :data="borrowHistory"
+            style="width: 100%"
+            max-height="250">
+            <el-table-column
+              prop="title"
+              label="书名"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="startdate"
+              label="借阅日期"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="enddate"
+              label="归还日期"
+              width="200">
+            </el-table-column>
+          </el-table>
         </el-card>
       </div>
       <div id="fine">
         <el-card class="menu">
           <i class="el-icon-warning-outline"/>
-          超期罚款</el-card>
+          超期罚款
+          <el-table
+            :data="fine"
+            style="width: 100%"
+            max-height="250">
+            <el-table-column
+              prop="title"
+              label="书名"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="startdate"
+              label="借阅日期"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="enddate"
+              label="预定归还日期"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="fine"
+              label="罚款金额"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="120">
+              <template slot-scope="scope">
+                <el-button
+                  type="text"
+                  size="small">
+                  缴纳
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </div>
       <div id="user-information">
         <el-dialog
@@ -53,7 +148,7 @@
             <p class="info">手机号：  {{user.phone}}</p>
             <p class="info">邮箱： {{user.email}}</p>
           </div>
-          <el-button style="position: absolute;margin-left: 800px;margin-top: -100px" type="primary" icon="el-icon-setting" @click="alterUser()">修改
+          <el-button style="position: absolute;margin-left: 800px;margin-top: -100px" type="primary" icon="el-icon-setting" @click="alertUser()">修改
           </el-button>
         </el-card>
       </div>
@@ -67,15 +162,19 @@
     components: {SideMenu},
     data () {
       return {
-        user: {
-
-        },
+        user: {},
         bookborrow: [],
+        borrowHistory: [],
+        fine: [],
         dialogFormVisible: false
       }
     },
     mounted () {
-      this.loadUser()// 给window添加一个滚动滚动监听事件
+      this.loadUser()
+      this.loadBookBorrow()
+      // this.loadBorrowHistory()
+      // this.loadFine()
+      // 给window添加一个滚动滚动监听事件
       window.addEventListener('scroll', this.handleScroll)
     },
     methods: {
@@ -94,6 +193,36 @@
       destroyed () { // 离开该页面需要移除这个监听的事件
         window.removeEventListener('scroll', this.handleScroll)
       },
+      loadBookBorrow () {
+        var _this = this
+        this.$axios.post('/borrow_information', {
+          username: this.$store.state.username
+        }).then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.bookborrow = resp.data.result
+          }
+        })
+      },
+      loadBorrowHistory () {
+        var _this = this
+        this.$axios.post('/borrow_history', {
+          username: this.$store.state.username
+        }).then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.borrowHistory = resp.data.result
+          }
+        })
+      },
+      loadFine () {
+        var _this = this
+        this.$axios.post('/fine', {
+          username: this.$store.state.username
+        }).then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.fine = resp.data.result
+          }
+        })
+      },
       loadUser () {
         var _this = this
         this.$axios.post('/user-information', {
@@ -101,13 +230,6 @@
         }).then(resp => {
           if (resp && resp.data.code === 200) {
             _this.user = resp.data.result
-          }
-        })
-        this.$axios.post('/borrow_information', {
-          username: this.$store.state.username
-        }).then(resp => {
-          if (resp && resp.data.code === 200) {
-            _this.bookborrow = resp.data.result
           }
         })
       },
@@ -130,8 +252,32 @@
           }
         })
       },
-      alterUser () {
+      alertUser () { // 更改用户信息
         this.dialogFormVisible = true
+      },
+      bookReturn () { // 图书归还
+        this.$axios.post('/userCenter/bookReturn', {
+          title: this.book.title,
+          username: this.$store.state.username
+        }).then(successResponse => {
+          if (successResponse.data.code === 200) {
+            alert('归还成功')
+          } else {
+            alert('您已超期，请先缴纳罚款')
+          }
+        })
+      },
+      bookRenew () { // 图书续借
+        this.$axios.post('/userCenter/bookRenew', {
+          title: this.book.title,
+          username: this.$store.state.username
+        }).then(successResponse => {
+          if (successResponse.data.code === 200) {
+            alert('续借成功')
+          } else {
+            alert('该书籍当前状态不可借阅')
+          }
+        })
       }
     }
   }
