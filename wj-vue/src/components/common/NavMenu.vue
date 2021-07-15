@@ -19,7 +19,12 @@
         style="width: 300px;position:absolute;margin-top: 12px;right: 18%"
         v-model="keywords">
       </el-input>
-      <el-button style="position: absolute;right: 12px;margin-top: 10px" type="primary" icon="el-icon-user-solid" @click="register">登录</el-button>
+      <div v-if="showLogin">
+        <el-button id="login" style="position: absolute;right: 12px;margin-top: 10px" type="primary" icon="el-icon-user-solid" @click="register">登录</el-button>
+      </div>
+      <div v-if="showUser">
+        <span style="position: absolute;right: 12px;padding-top: 20px" >{{ this.$store.state.username }}</span>
+      </div>
     </el-menu>
   </div>
 </template>
@@ -48,9 +53,14 @@
             {name: '/userCenter', navItem: '个人中心'},
             {name: '/login', navItem: '管理中心'}
           ],
-          keywords: ''
+          keywords: '',
+          showLogin: true,
+          showUser: false
         }
       // }
+    },
+    mounted () {
+      this.checkLoginStatus()
     },
     computed: {
       hoverBackground () {
@@ -68,6 +78,12 @@
     methods: {
       register () {
         this.$router.push('./Login')
+      },
+      checkLoginStatus () {
+        if (this.$store.state.username) {
+          this.showLogin = false
+          this.showUser = true
+        }
       }
     }
   }
