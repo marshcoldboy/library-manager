@@ -10,7 +10,11 @@
       <div id="borrow-history">
         <el-card class="menu">
           <i class="el-icon-s-fold"/>
-          借阅历史</el-card>
+          借阅历史
+          <div style="margin-top: 25px;margin-left: 33px">
+            <p class="info">用户名: {{bookborrow[0].username}} 书名: {{bookborrow[0].title}} 借书时间: {{bookborrow[0].startdate}} 归还时间: {{bookborrow[0].enddate}}</p>
+          </div>
+        </el-card>
       </div>
       <div id="fine">
         <el-card class="menu">
@@ -66,6 +70,7 @@
         user: {
 
         },
+        bookborrow: [],
         dialogFormVisible: false
       }
     },
@@ -96,6 +101,13 @@
         }).then(resp => {
           if (resp && resp.data.code === 200) {
             _this.user = resp.data.result
+          }
+        })
+        this.$axios.post('/borrow_information', {
+          username: this.$store.state.username
+        }).then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.bookborrow = resp.data.result
           }
         })
       },

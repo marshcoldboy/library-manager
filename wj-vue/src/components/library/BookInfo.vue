@@ -63,8 +63,7 @@ export default {
         isbn: '',
         press: '',
         price: '',
-        abs: '',
-        barcode: ''
+        abs: ''
       }
     }
   },
@@ -85,9 +84,8 @@ export default {
     borrow (book) {
       // var _this = this
       this.$axios.post('/BookBorrow', {
-          book: book,
-          bookID: this.book.bid,
-          userID: this.$store.state.username
+          title: this.book.title,
+          username: this.$store.state.username
         }).then(successResponse => {
         if (successResponse.data.code === 200) {
           alert('借阅成功')

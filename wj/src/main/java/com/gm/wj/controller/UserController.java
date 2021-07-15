@@ -25,6 +25,8 @@ public class UserController {
     UserService userService;
     @Autowired
     AdminUserRoleService adminUserRoleService;
+    @Autowired
+    BookBorrowService bookBorrowService;
 
     @GetMapping("/api/admin/user")
     public Result listUsers() {
@@ -63,6 +65,13 @@ public class UserController {
     @PostMapping("/api/user-information")
     public Result userInformation(@RequestBody @Valid User user) throws Exception {
         return ResultFactory.buildSuccessResult(userService.findByUsername(user.getUsername()));
+    }
+
+
+    @PostMapping("/api/borrow_information")
+    public Result borrowInformation(@RequestBody @Valid User user){
+        String username=user.getUsername();
+        return ResultFactory.buildSuccessResult(bookBorrowService.list(username));
     }
 
     @PostMapping("/api/user-information/alterUser")

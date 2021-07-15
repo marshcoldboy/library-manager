@@ -1,6 +1,7 @@
 package com.gm.wj.controller;
 
 import com.gm.wj.entity.Book;
+import com.gm.wj.entity.BookBorrow;
 import com.gm.wj.entity.Category;
 import com.gm.wj.result.Result;
 import com.gm.wj.result.ResultFactory;
@@ -32,12 +33,12 @@ public class LibraryController {
 
     @Autowired
     CategoryService categoryService;
+    private @Valid Object bookBorrow;
 
     @PostMapping("/api/BookBorrow")
-    public Result subscribe(@RequestBody @Valid String bookID){
+    public Result subscribe(@RequestBody @Valid BookBorrow bookBorrow){
 
-        System.out.println(bookID);
-
+        bookBorrowService.add(bookBorrow);
         return ResultFactory.buildSuccessResult("修改成功");
     }
 
