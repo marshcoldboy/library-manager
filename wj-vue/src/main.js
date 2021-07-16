@@ -7,6 +7,8 @@ import 'echarts/theme/macarons.js'
 import store from './store'
 
 import {
+  Backtop,
+  DatePicker,
   Pagination,
   Dialog,
   Menu,
@@ -64,6 +66,8 @@ import {
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+Vue.use(Backtop)
+Vue.use(DatePicker)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Menu)
