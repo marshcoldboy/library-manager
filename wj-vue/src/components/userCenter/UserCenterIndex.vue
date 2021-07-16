@@ -72,13 +72,18 @@
             </el-table-column>
             <el-table-column
               prop="enddate"
-              label="归还日期"
+              label="规定归还日期"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="returndate"
+              label="实际归还日期"
               width="200">
             </el-table-column>
             <el-table-column
               prop="status"
               label="状态"
-              width="200">
+              width="100">
             </el-table-column>
           </el-table>
         </el-card>
@@ -278,24 +283,28 @@
       },
       bookReturn (item) { // 图书归还
         this.$axios.post('/userCenter/bookReturn', {
-          borrow_id: item.borrow_id
+          borrowid: item.borrowid
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
             alert('归还成功')
           } else {
-            alert('您已超期，请先缴纳罚款')
+            alert('您已超期，请缴纳罚款')
           }
+          this.loadBookBorrow()
+          this.loadBorrowHistory()
         })
       },
       bookRenew (item) { // 图书续借
         this.$axios.post('/userCenter/bookRenew', {
-          borrow_id: item.borrow_id
+          borrowid: item.borrowid
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
             alert('续借成功')
           } else {
             alert('该书籍当前状态不可借阅')
           }
+          this.loadBookBorrow()
+          this.loadBorrowHistory()
         })
       }
     }

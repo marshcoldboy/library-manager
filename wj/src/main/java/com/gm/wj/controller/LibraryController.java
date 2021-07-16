@@ -37,7 +37,6 @@ public class LibraryController {
 
     @PostMapping("/api/BookBorrow")
     public Result subscribe(@RequestBody @Valid BookBorrow bookBorrow){
-
         bookBorrowService.add(bookBorrow);
         return ResultFactory.buildSuccessResult("修改成功");
     }

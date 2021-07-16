@@ -45,4 +45,18 @@ public class InformationController {
         userService.editUser(alterUser);
         return ResultFactory.buildSuccessResult(null);
     }
+
+    @PostMapping("/api/userCenter/bookReturn")
+    public Result bookReturn(@RequestBody @Valid BookBorrow bookBorrow){
+        if(bookBorrowService.returnBook(bookBorrow.getBorrowid())!=null)
+            return ResultFactory.buildSuccessResult(null);
+        else
+            return ResultFactory.buildFailResult("归还出错");
+    }
+
+    @PostMapping("/api/userCenter/bookRenew")
+    public Result bookRenew(@RequestBody @Valid BookBorrow bookBorrow){
+        System.out.println(bookBorrowService.renewBook(bookBorrow.getBorrowid()));
+        return ResultFactory.buildSuccessResult(null);
+    }
 }

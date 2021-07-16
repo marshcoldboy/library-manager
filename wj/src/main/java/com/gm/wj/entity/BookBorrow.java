@@ -13,8 +13,8 @@ import java.sql.Date;
 @ToString
 public class BookBorrow {
     @Id
-    @Column(name = "borrow_id")
-    int borrow_id;
+    @Column(name = "borrowid")
+    int borrowid;
 
     @Column(name="username")
     String username;
@@ -34,6 +34,17 @@ public class BookBorrow {
     @Transient
     int days;
 
+    @Transient
+    String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public int getDays() {
         return days;
     }
@@ -43,7 +54,7 @@ public class BookBorrow {
     }
 
     public BookBorrow(int borrow_id, String username, String title, Date startdate, Date enddate, Date returndate) {
-        this.borrow_id = borrow_id;
+        this.borrowid = borrow_id;
         this.username = username;
         this.title = title;
         this.startdate = startdate;
@@ -54,8 +65,8 @@ public class BookBorrow {
     public BookBorrow() {
     }
 
-    public int getBorrow_id() {
-        return borrow_id;
+    public int getBorrowid() {
+        return borrowid;
     }
 
     public String getTitle() {
@@ -66,8 +77,8 @@ public class BookBorrow {
         this.title = title;
     }
 
-    public void setBorrow_id(int id) {
-        this.borrow_id = id;
+    public void setBorrowid(int id) {
+        this.borrowid = id;
     }
 
     public Date getStartdate() {
