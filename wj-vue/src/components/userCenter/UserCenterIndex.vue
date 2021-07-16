@@ -243,7 +243,7 @@
     mounted () {
       this.loadUser()
       this.loadBookBorrow()
-      // this.loadBorrowHistory()
+      this.loadBorrowHistory()
       // this.loadFine()
       // 给window添加一个滚动滚动监听事件
       window.addEventListener('scroll', this.handleScroll)
@@ -361,6 +361,8 @@
           } else {
             alert('该书籍当前状态不可借阅')
           }
+          this.loadBookBorrow()
+          this.loadBorrowHistory()
         })
       }
     }

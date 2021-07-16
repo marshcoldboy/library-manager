@@ -9,4 +9,5 @@ import java.util.List;
 public interface BookBorrowDAO extends JpaRepository<BookBorrow,Integer> {
 
     List<BookBorrow> findAllByUsername(String username);
+    BookBorrow findByBorrowid(int id);
 }
