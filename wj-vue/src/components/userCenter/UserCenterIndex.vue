@@ -1,9 +1,24 @@
 <template>
-  <div>
+  <div class="userCenterIndex">
+    <el-backtop target=".userCenterIndex">
+      <div
+        style="{
+                        height: 100%;
+                        width: 100%;
+                        background-color: #f2f5f6;
+                        box-shadow: 0 0 6px rgba(0,0,0, .12);
+                        text-align: center;
+                        line-height: 40px;
+                        color: #1989fa;
+                    }"
+      >
+        UP
+      </div>
+    </el-backtop>
     <div style="margin-top: 40px">
       <side-menu class="fixed" id="side-menu"></side-menu>
       <div id="current-borrow">
-        <el-card class="menu" >
+        <el-card class="userCenter" >
           <i class="el-icon-reading"/>
           当前借阅
           <el-table
@@ -53,7 +68,7 @@
         </el-card>
       </div>
       <div id="borrow-history">
-        <el-card class="menu">
+        <el-card class="userCenter">
           <i class="el-icon-s-fold"/>
           借阅历史
           <el-table
@@ -72,23 +87,29 @@
             </el-table-column>
             <el-table-column
               prop="enddate"
-              label="归还日期"
+              label="规定归还日期"
+              width="200">
+            </el-table-column>
+            <el-table-column
+              prop="returndate"
+              label="实际归还日期"
               width="200">
             </el-table-column>
             <el-table-column
               prop="status"
               label="状态"
-              width="200">
+              width="100">
             </el-table-column>
           </el-table>
         </el-card>
       </div>
       <div id="fine">
-        <el-card class="menu">
+        <el-card class="userCenter">
           <i class="el-icon-warning-outline"/>
           超期罚款
+          <div class="block">
             <el-date-picker
-              v-model="value2"
+              v-model="date"
               type="daterange"
               align="right"
               unlink-panels
@@ -97,6 +118,8 @@
               end-placeholder="结束日期"
               :picker-options="pickerOptions">
             </el-date-picker>
+            <el-button @click="loadFineAccordingDate()">查询</el-button>
+          </div>
           <el-table
             :data="fine"
             style="width: 100%"
@@ -159,7 +182,7 @@
             <el-button type="primary" @click="onSubmit(user)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-card class="menu">
+        <el-card class="userCenter">
           <i class="el-icon-user"/>
           个人信息
           <div style="margin-top: 25px;margin-left: 33px">
@@ -187,7 +210,34 @@
         borrowHistory: [],
         fine: [],
         dialogFormVisible: false,
-        value2: ''
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          }, {
+            text: '最近一个月',
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          }, {
+            text: '最近三个月',
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
+            }
+          }]
+        },
+        date: ''
       }
     },
     mounted () {
@@ -244,6 +294,17 @@
           }
         })
       },
+      loadFineAccordingDate () {
+        var _this = this
+        this.$axios.post('/fineAccordingDate', {
+          username: this.$store.state.username,
+          date: this.date
+        }).then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.fine = resp.data.result
+          }
+        })
+      },
       loadUser () {
         var _this = this
         this.$axios.post('/user-information', {
@@ -278,21 +339,25 @@
       },
       bookReturn (item) { // 图书归还
         this.$axios.post('/userCenter/bookReturn', {
-          borrow_id: item.borrow_id
+          borrowid: item.borrowid
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
             alert('归还成功')
           } else {
-            alert('您已超期，请先缴纳罚款')
+            alert('您已超期，请缴纳罚款')
           }
+          this.loadBookBorrow()
+          this.loadBorrowHistory()
         })
       },
       bookRenew (item) { // 图书续借
         this.$axios.post('/userCenter/bookRenew', {
-          borrow_id: item.borrow_id
+          borrowid: item.borrowid
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
             alert('续借成功')
+            this.loadBookBorrow()
+            this.loadBorrowHistory()
           } else {
             alert('该书籍当前状态不可借阅')
           }
@@ -302,6 +367,10 @@
   }
 </script>
 <style scoped>
+  .userCenterIndex{
+    height: 100vh;
+    overflow-x: hidden;
+  }
   .fixed {
     position: fixed;
     bottom: 100px;
@@ -334,7 +403,7 @@
     margin-left: auto;
     margin-right: auto;
   }
-  .menu{
+  .userCenter{
     text-align: left;
     font-weight: bold;
     font-size: 23px;
@@ -344,5 +413,8 @@
     font-size: 16px;
     font-weight: normal;
     margin-bottom: 6px;
+  }
+  .block{
+    margin: auto;
   }
 </style>
