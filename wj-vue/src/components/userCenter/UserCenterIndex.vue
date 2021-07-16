@@ -9,7 +9,7 @@
           <el-table
             :data="bookborrow"
             style="width: 100%"
-            max-height="250">
+            max-height="500">
             <el-table-column
               prop="title"
               label="书名"
@@ -36,13 +36,13 @@
               width="120">
               <template slot-scope="scope">
                 <el-button
-                  @click="bookReturn"
+                  @click="bookReturn(scope.row)"
                   type="text"
                   size="small">
                   归还
                 </el-button>
                 <el-button
-                  @click="bookRenew"
+                  @click="bookRenew(scope.row)"
                   type="text"
                   size="small">
                   续借
@@ -59,7 +59,7 @@
           <el-table
             :data="borrowHistory"
             style="width: 100%"
-            max-height="250">
+            max-height="500">
             <el-table-column
               prop="title"
               label="书名"
@@ -75,6 +75,11 @@
               label="归还日期"
               width="200">
             </el-table-column>
+            <el-table-column
+              prop="status"
+              label="状态"
+              width="200">
+            </el-table-column>
           </el-table>
         </el-card>
       </div>
@@ -82,10 +87,20 @@
         <el-card class="menu">
           <i class="el-icon-warning-outline"/>
           超期罚款
+            <el-date-picker
+              v-model="value2"
+              type="daterange"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions">
+            </el-date-picker>
           <el-table
             :data="fine"
             style="width: 100%"
-            max-height="250">
+            max-height="500">
             <el-table-column
               prop="title"
               label="书名"
@@ -171,7 +186,8 @@
         bookborrow: [],
         borrowHistory: [],
         fine: [],
-        dialogFormVisible: false
+        dialogFormVisible: false,
+        value2: ''
       }
     },
     mounted () {
@@ -260,10 +276,9 @@
       alterUser () { // 更改用户信息
         this.dialogFormVisible = true
       },
-      bookReturn () { // 图书归还
+      bookReturn (item) { // 图书归还
         this.$axios.post('/userCenter/bookReturn', {
-          title: this.book.title,
-          username: this.$store.state.username
+          borrow_id: item.borrow_id
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
             alert('归还成功')
@@ -272,10 +287,9 @@
           }
         })
       },
-      bookRenew () { // 图书续借
+      bookRenew (item) { // 图书续借
         this.$axios.post('/userCenter/bookRenew', {
-          title: this.book.title,
-          username: this.$store.state.username
+          borrow_id: item.borrow_id
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
             alert('续借成功')
