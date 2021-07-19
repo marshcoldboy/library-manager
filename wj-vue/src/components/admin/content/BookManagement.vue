@@ -4,80 +4,69 @@
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/admin/dashboard' }">管理中心</el-breadcrumb-item>
         <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-        <el-breadcrumb-item>图书管理</el-breadcrumb-item>
+        <el-breadcrumb-item>借阅历史</el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
-    <edit-form @onSubmit="loadBooks()" ref="edit"></edit-form>
-    <el-card style="margin: 18px 2%;width: 95%">
-      <el-table
-        ref="checkBoxTable"
-        :data="books"
-        stripe
-        style="width: 100%"
-        @selection-change="handleSelectionChange"
-        :max-height="tableHeight">
-        <el-table-column
-          type="selection"
-          width="55">
-        </el-table-column>
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <el-form label-position="left" inline>
-              <el-form-item>
-                <span>{{ props.row.abs }}</span>
-              </el-form-item>
-            </el-form>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="title"
-          label="书名（展开查看摘要）"
-          fit>
-        </el-table-column>
-        <el-table-column
-          prop="category.name"
-          label="分类"
-          width="100">
-        </el-table-column>
-        <el-table-column
-          prop="author"
-          label="作者"
-          fit>
-        </el-table-column>
-        <el-table-column
-          prop="press"
-          label="出版社"
-          fit>
-        </el-table-column>
-        <!--<el-table-column-->
-        <!--prop="abs"-->
-        <!--label="摘要"-->
-        <!--show-overflow-tooltip-->
-        <!--fit>-->
-        <!--</el-table-column>-->
-        <el-table-column
-          fixed="right"
-          label="操作"
-          width="120">
-          <template slot-scope="scope">
-            <el-button
-              @click.native.prevent="editBook(scope.row)"
-              type="text"
-              size="small">
-              编辑
-            </el-button>
-            <el-button
-              @click="deleteBook(scope.row)"
-              type="text"
-              size="small">
-              移除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div style="margin: 20px 0 20px 0;float: left">
-        <el-button @click="cancelSelection()">取消选择</el-button>
-        <el-button @click="deleteSelectedBooks()">批量删除</el-button>
+    <el-card style="margin: 18px 2%;width: 95%;margin-top: 40px">
+      <div id="borrow-history">
+        <p style="margin-right: 1000px">
+          <span><i class="el-icon-s-fold"></i></span>
+          <span style="font-size: 20px">借阅历史</span>
+        </p>
+        <div>
+          <span style="margin-left: 500px">
+            <el-input v-model="username" placeholder="按用户名查询" style="width: 150px"></el-input>
+          </span>
+          <span style="margin-left: 10px">
+            <el-date-picker
+              v-model="date"
+              type="daterange"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"
+              :picker-options="pickerOptions">
+              </el-date-picker>
+              <el-button @click="loadBorrowHistoryAccordingDateAndUsername()">查询</el-button>
+          </span>
+        </div>
+        <el-table
+          :data="borrowHistory"
+          style="width: 100%;margin-top: 20px"
+          max-height="500">
+          <el-table-column
+            prop="username"
+            label="用户"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="title"
+            label="书名"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="startdate"
+            label="借阅日期"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="enddate"
+            label="规定归还日期"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="returndate"
+            label="实际归还日期"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="status"
+            label="状态"
+            width="100">
+          </el-table-column>
+        </el-table>
       </div>
     </el-card>
   </div>
@@ -86,12 +75,40 @@
 <script>
   import EditForm from './EditForm'
   export default {
-    name: 'BookManagement',
+    name: 'BorrowHistory',
     components: {EditForm},
     data () {
       return {
-        books: [],
-        multipleSelection: []
+        borrowHistory: [],
+        date: '',
+        username: '',
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          }, {
+            text: '最近一个月',
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          }, {
+            text: '最近三个月',
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
+            }
+          }]
+        }
       }
     },
     mounted () {
@@ -103,84 +120,50 @@
       }
     },
     methods: {
-      deleteBook (item) {
-        this.$confirm('此操作将永久删除该书籍, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-            this.$axios
-              .post('/admin/content/books/delete', {bid: item.bid}).then(resp => {
-              if (resp && resp.data.code === 200) {
-                this.loadBooks()
-              }
-            })
-          }
-        ).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
-      },
-      editBook (item) {
-        this.$refs.edit.dialogFormVisible = true
-        this.$refs.edit.form = {
-          bid: item.bid,
-          cover: item.cover,
-          title: item.title,
-          author: item.author,
-          isbn: item.isbn,
-          price: item.price,
-          press: item.press,
-          abs: item.abs,
-          category: {
-            cid: item.category.cid.toString(),
-            name: item.category.name
-          }
-        }
-        // this.$refs.edit.category = {
-        //   id: item.category.id.toString()
-        // }
-      },
-      loadBooks () {
+      loadBorrowHistory () {
         var _this = this
-        this.$axios.get('/books').then(resp => {
+        this.$axios.get('/borrow_history_all').then(resp => {
           if (resp && resp.data.code === 200) {
-            _this.books = resp.data.result
+            _this.borrowHistory = resp.data.result
           }
         })
       },
-      deleteSelectedBooks () {
+      loadBorrowHistoryAccordingDate () {
         var _this = this
-        this.$confirm('此操作将永久删除所选书籍, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-            this.$axios
-              .post('/admin/content/books/deleteSelectedBooks', {bids: _this.multipleSelection}).then(resp => {
-              if (resp && resp.data.code === 200) {
-                this.loadBooks()
-              }
-            })
+        this.$axios.post('/borrow_history_all_accordingDate', {
+          date: this.date
+        }).then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.borrowHistory = resp.data.result
           }
-        ).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
+        })
+      },
+      loadBorrowHistoryAccordingUsername () {
+        var _this = this
+        this.$axios.post('/borrow_history', {
+          username: this.username
+        }).then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.borrowHistory = resp.data.result
+          }
+        })
+      },
+      loadBorrowHistoryAccordingDateAndUsername () {
+        var _this = this
+        if (this.user !== '' && this.date === '') {
+          this.loadBorrowHistoryAccordingUsername()
+        } else if (this.user === '' && this.date !== '') {
+          this.loadBorrowHistoryAccordingDate()
+        } else {
+          this.$axios.post('/borrow_history_all_accordingDateAndUsername', {
+            userName: this.username,
+            date: this.date
+          }).then(resp => {
+            if (resp && resp.data.code === 200) {
+              _this.borrowHistory = resp.data.result
+            }
           })
-        })
-      },
-      cancelSelection (rows) {
-        this.$refs.checkBoxTable.clearSelection()
-      },
-      handleSelectionChange (val) {
-        this.multipleSelection = []
-        val.forEach(item => {
-          this.multipleSelection.push(item.bid)
-        })
-        console.log(this.multipleSelection)
+        }
       }
     }
   }
