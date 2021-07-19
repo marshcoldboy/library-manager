@@ -135,13 +135,18 @@
               width="200">
             </el-table-column>
             <el-table-column
-              prop="enddate"
-              label="预定归还日期"
-              width="200">
+              prop="daysOverdue"
+              label="逾期天数"
+              width="120">
             </el-table-column>
             <el-table-column
               prop="fine"
               label="罚款金额"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              prop="status"
+              label="缴纳状态"
               width="120">
             </el-table-column>
             <el-table-column
@@ -361,8 +366,6 @@
           } else {
             alert('该书籍当前状态不可借阅')
           }
-          this.loadBookBorrow()
-          this.loadBorrowHistory()
         })
       }
     }

@@ -111,6 +111,14 @@ export const createRouter = routes => new Router({
           component: () => import('../components/home/AppIndex')
         },
         {
+          path: '/userCenter',
+          name: 'userCenter',
+          component: () => import('../components/userCenter/UserCenterIndex'),
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
           path: '/admin/content/editor',
           name: 'Editor',
           component: () => import('../components/admin/content/ArticleEditor'),
