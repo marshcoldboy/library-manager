@@ -83,4 +83,8 @@ public class BookBorrowService {
         bookBorrow.setEnddate(endDate);
         return bookBorrowDAO.saveAndFlush(bookBorrow);
     }
+
+    public BookBorrow findByBorrowid(int borrow_id){
+        return findByBorrowid(borrow_id);
+    }
 }

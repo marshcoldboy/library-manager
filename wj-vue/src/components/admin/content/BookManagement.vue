@@ -10,9 +10,11 @@
     <edit-form @onSubmit="loadBooks()" ref="edit"></edit-form>
     <el-card style="margin: 18px 2%;width: 95%">
       <el-table
+        ref="checkBoxTable"
         :data="books"
         stripe
         style="width: 100%"
+        @selection-change="handleSelectionChange"
         :max-height="tableHeight">
         <el-table-column
           type="selection"
@@ -48,10 +50,10 @@
           fit>
         </el-table-column>
         <!--<el-table-column-->
-          <!--prop="abs"-->
-          <!--label="摘要"-->
-          <!--show-overflow-tooltip-->
-          <!--fit>-->
+        <!--prop="abs"-->
+        <!--label="摘要"-->
+        <!--show-overflow-tooltip-->
+        <!--fit>-->
         <!--</el-table-column>-->
         <el-table-column
           fixed="right"
@@ -74,8 +76,8 @@
         </el-table-column>
       </el-table>
       <div style="margin: 20px 0 20px 0;float: left">
-        <el-button>取消选择</el-button>
-        <el-button>批量删除</el-button>
+        <el-button @click="cancelSelection()">取消选择</el-button>
+        <el-button @click="deleteSelectedBooks()">批量删除</el-button>
       </div>
     </el-card>
   </div>
@@ -88,7 +90,8 @@
     components: {EditForm},
     data () {
       return {
-        books: []
+        books: [],
+        multipleSelection: []
       }
     },
     mounted () {
@@ -147,6 +150,37 @@
             _this.books = resp.data.result
           }
         })
+      },
+      deleteSelectedBooks () {
+        var _this = this
+        this.$confirm('此操作将永久删除所选书籍, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+            this.$axios
+              .post('/admin/content/books/deleteSelectedBooks', {bids: _this.multipleSelection}).then(resp => {
+              if (resp && resp.data.code === 200) {
+                this.loadBooks()
+              }
+            })
+          }
+        ).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      cancelSelection (rows) {
+        this.$refs.checkBoxTable.clearSelection()
+      },
+      handleSelectionChange (val) {
+        this.multipleSelection = []
+        val.forEach(item => {
+          this.multipleSelection.push(item.bid)
+        })
+        console.log(this.multipleSelection)
       }
     }
   }

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Library controller.
@@ -57,6 +58,15 @@ public class LibraryController {
     @PostMapping("/api/admin/content/books/delete")
     public Result deleteBook(@RequestBody @Valid Book book) {
         bookService.deleteByBid(book.getBid());
+        return ResultFactory.buildSuccessResult("删除成功");
+    }
+
+    @PostMapping("/api/admin/content/books/deleteSelectedBooks")
+    public Result deleteAllBook(@RequestBody @Valid Book books){
+        int[] bids=books.getBids();
+        for (int i:bids) {
+            bookService.deleteByBid(i);
+        }
         return ResultFactory.buildSuccessResult("删除成功");
     }
 

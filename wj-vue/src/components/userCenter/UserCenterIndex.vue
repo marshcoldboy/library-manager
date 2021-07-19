@@ -112,6 +112,7 @@
               v-model="date"
               type="daterange"
               align="right"
+              value-format="yyyy-MM-dd"
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -249,7 +250,7 @@
       this.loadUser()
       this.loadBookBorrow()
       this.loadBorrowHistory()
-      // this.loadFine()
+      this.loadFine()
       // 给window添加一个滚动滚动监听事件
       window.addEventListener('scroll', this.handleScroll)
     },
@@ -271,7 +272,7 @@
       },
       loadBookBorrow () {
         var _this = this
-        this.$axios.post('/borrow_information', {
+        this.$axios.post('/userCenter/borrow_information', {
           username: this.$store.state.username
         }).then(resp => {
           if (resp && resp.data.code === 200) {
@@ -281,7 +282,7 @@
       },
       loadBorrowHistory () {
         var _this = this
-        this.$axios.post('/borrow_history', {
+        this.$axios.post('/userCenter/borrow_history', {
           username: this.$store.state.username
         }).then(resp => {
           if (resp && resp.data.code === 200) {
@@ -291,7 +292,7 @@
       },
       loadFine () {
         var _this = this
-        this.$axios.post('/fine', {
+        this.$axios.post('/userCenter/fine_information', {
           username: this.$store.state.username
         }).then(resp => {
           if (resp && resp.data.code === 200) {
@@ -301,7 +302,7 @@
       },
       loadFineAccordingDate () {
         var _this = this
-        this.$axios.post('/fineAccordingDate', {
+        this.$axios.post('/userCenter/fineAccordingDate', {
           username: this.$store.state.username,
           date: this.date
         }).then(resp => {
@@ -312,7 +313,7 @@
       },
       loadUser () {
         var _this = this
-        this.$axios.post('/user-information', {
+        this.$axios.post('/userCenter/user_information', {
           username: this.$store.state.username
         }).then(resp => {
           if (resp && resp.data.code === 200) {
@@ -322,7 +323,7 @@
       },
       onSubmit (user) {
         // 根据视图绑定的角色 id 向后端传送角色信息
-        this.$axios.post('/user-information/alterUser', {
+        this.$axios.post('/userCenter/user_information/alterUser', {
           username: user.username,
           name: user.name,
           phone: user.phone,

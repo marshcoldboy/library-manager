@@ -61,4 +61,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name="cid")
     private Category category;
+
+    @Transient
+    private int[] bids;
 }
