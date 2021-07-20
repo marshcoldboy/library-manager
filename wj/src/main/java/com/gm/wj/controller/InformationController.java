@@ -7,6 +7,7 @@ import com.gm.wj.entity.User;
 import com.gm.wj.result.Result;
 import com.gm.wj.result.ResultFactory;
 import com.gm.wj.service.BookBorrowService;
+import com.gm.wj.service.FineService;
 import com.gm.wj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +24,8 @@ public class InformationController {
     BookBorrowService bookBorrowService;
     @Autowired
     UserService userService;
-
-    private List<Integer> historyBorrowids;
+    @Autowired
+    FineService fineService;
 
     @PostMapping("/api/userCenter/user_information")
     public Result userInformation(@RequestBody @Valid User user) throws Exception {
@@ -40,11 +41,7 @@ public class InformationController {
     @PostMapping("/api/userCenter/borrow_history")
     public Result borrowHistory(@RequestBody @Valid User user){
         String username=user.getUsername();
-        List<BookBorrow> borrowList=bookBorrowService.historyList(username);
-        historyBorrowids.clear();
-        for(BookBorrow i:borrowList)
-            historyBorrowids.add(i.getBorrowid());
-        return ResultFactory.buildSuccessResult(borrowList);
+        return ResultFactory.buildSuccessResult(bookBorrowService.historyList(username));
     }
 
     @PostMapping("/api/userCenter/user_information/alterUser")
@@ -68,20 +65,13 @@ public class InformationController {
     }
 
     @PostMapping("/api/userCenter/fine_information")
-    public Result fineInformation(@RequestBody @Valid String fine){
-//        System.out.println(fine);
-//        List<Fine> fineList=null;
-//        for (int i:historyBorrowids) {
-//            Fine temple=new Fine(bookBorrowService.findByBorrowid(i));
-//            fineList.add(temple);
-//        }
-
-        return ResultFactory.buildSuccessResult(null);
+    public Result fineInformation(@RequestBody @Valid User user){
+        return ResultFactory.buildSuccessResult(fineService.fineInformation(user.getUsername()));
     }
 
     @PostMapping("/api/userCenter/fineAccordingDate")
     public Result fineAccordingDate(@RequestBody @Valid String fine){
-        System.out.println(fine);
+//        System.out.println(fine);
         return ResultFactory.buildSuccessResult(null);
     }
 }

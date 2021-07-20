@@ -126,17 +126,17 @@
             style="width: 100%"
             max-height="500">
             <el-table-column
-              prop="title"
+              prop="bookborrow.title"
               label="书名"
               width="200">
             </el-table-column>
             <el-table-column
-              prop="startdate"
+              prop="bookborrow.startdate"
               label="借阅日期"
               width="200">
             </el-table-column>
             <el-table-column
-              prop="daysOverdue"
+              prop="days"
               label="逾期天数"
               width="120">
             </el-table-column>
@@ -148,7 +148,7 @@
             <el-table-column
               prop="status"
               label="缴纳状态"
-              width="120">
+              width="140">
             </el-table-column>
             <el-table-column
               fixed="right"
@@ -354,6 +354,7 @@
           }
           this.loadBookBorrow()
           this.loadBorrowHistory()
+          this.loadFine()
         })
       },
       bookRenew (item) { // 图书续借
