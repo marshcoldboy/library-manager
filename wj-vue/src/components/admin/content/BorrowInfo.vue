@@ -4,15 +4,15 @@
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/admin/dashboard' }">管理中心</el-breadcrumb-item>
         <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-        <el-breadcrumb-item>借阅确认</el-breadcrumb-item>
+        <el-breadcrumb-item>当前借阅信息</el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
     <el-card style="width: 95%;margin: 40px 2% 18px;">
       <div style="margin-top: 40px">
         <side-menu class="fixed" id="side-menu"></side-menu>
-        <p style="margin-right: 1000px;margin-top: -30px">
+        <p style="margin-right: 960px;margin-top: -30px">
           <span><i class="el-icon-s-fold"></i></span>
-          <span style="font-size: 20px">借阅确认</span>
+          <span style="font-size: 20px">当前借阅信息</span>
         </p>
         <el-table
           :data="bookborrow"
@@ -21,44 +21,27 @@
           <el-table-column
             prop="username"
             label="用户"
-            width="150">
+            width="200">
           </el-table-column>
           <el-table-column
             prop="title"
             label="书名"
-            width="180">
+            width="250">
           </el-table-column>
           <el-table-column
             prop="startdate"
             label="借阅日期"
-            width="180">
+            width="250">
           </el-table-column>
           <el-table-column
             prop="enddate"
-            label="归还日期"
-            width="180">
+            label="预定归还日期"
+            width="250">
           </el-table-column>
           <el-table-column
-            prop="fine"
-            label="罚款金额"
+            prop="renew"
+            label="是否续借"
             width="150">
-          </el-table-column>
-          <el-table-column
-            prop="status"
-            label="缴纳状态"
-            width="150">
-          </el-table-column>
-          <el-table-column
-            label="操作"
-            width="120">
-            <template slot-scope="scope">
-              <el-button
-                @click="bookReturnCheck(scope.row)"
-                type="text"
-                size="small">
-                确认归还
-              </el-button>
-            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -69,15 +52,15 @@
 <script>
 import EditForm from './EditForm'
 export default {
-  name: 'BorrowCheck',
+  name: 'BorrowInfo',
   components: {EditForm},
   data () {
     return {
-      bookReturn: []
+      bookborrow: []
     }
   },
   mounted () {
-    // this.loadBookReturn()
+    // this.loadBookBorrow()
   },
   computed: {
     tableHeight () {
@@ -85,24 +68,11 @@ export default {
     }
   },
   methods: {
-    loadBookReturn () {
+    loadBookBorrow () {
       var _this = this
-      this.$axios.get('/return_information').then(resp => {
+      this.$axios.get('/userCenter/borrow_information_all').then(resp => {
         if (resp && resp.data.code === 200) {
-          _this.bookReturn = resp.data.result
-        }
-      })
-    },
-    bookReturnCheck (item) {
-      this.$axios.post('/checkReturn', {
-        borrowid: item.borrowid
-      }).then(successResponse => {
-        if (successResponse.data.code === 200) {
-          alert('归还成功')
-          this.loadBookReturn()
-        } else {
-          alert('归还失败')
-          this.loadBookReturn()
+          _this.bookborrow = resp.data.result
         }
       })
     }
