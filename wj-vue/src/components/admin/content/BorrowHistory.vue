@@ -7,7 +7,7 @@
         <el-breadcrumb-item>借阅历史</el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
-    <el-card style="margin: 18px 2%;width: 95%;margin-top: 40px">
+    <el-card style="width: 95%;margin: 40px 2% 18px;">
       <div id="borrow-history">
         <p style="margin-right: 1000px">
           <span><i class="el-icon-s-fold"></i></span>
@@ -112,7 +112,7 @@ export default {
     }
   },
   mounted () {
-    this.loadBooks()
+    // this.loadBorrowHistory()
   },
   computed: {
     tableHeight () {
