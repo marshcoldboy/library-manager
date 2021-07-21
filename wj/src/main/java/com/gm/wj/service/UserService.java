@@ -45,6 +45,10 @@ public class UserService {
         return userDTOS;
     }
 
+    public List<AdminRole> roleList(String username){
+        return adminRoleService.listRolesByUser(username);
+    }
+
     public boolean isExist(String username) {
         User user = userDAO.findByUsername(username);
         return null != user;

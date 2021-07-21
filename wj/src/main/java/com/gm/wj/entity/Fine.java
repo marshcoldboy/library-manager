@@ -38,11 +38,8 @@ public class Fine {
         this.username=bookBorrow.getUsername();
         this.bookborrow = bookBorrow;
         int days=(int)((bookBorrow.getReturndate().getTime()-bookBorrow.getEnddate().getTime())/(1000*24*60*60));
-        this.bookborrow.setDays(days);
-        if(days<=0)
-            this.fine=0.00;
-        else
-            this.fine=0.1*days;
+        this.setDays(Math.max(0,days));
+        this.fine=this.days*0.1;
     }
 
     public Fine() {

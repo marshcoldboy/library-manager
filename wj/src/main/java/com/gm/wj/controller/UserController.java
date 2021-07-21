@@ -6,6 +6,7 @@ import com.gm.wj.result.Result;
 import com.gm.wj.result.ResultFactory;
 import com.gm.wj.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -60,5 +61,17 @@ public class UserController {
             return ResultFactory.buildSuccessResult("成功删除用户");
         else
             return ResultFactory.buildFailResult("删除出错");
+    }
+
+    @PostMapping("/api/isAdmin")
+    public Result isAdmin(@RequestBody @Valid User user){
+        System.out.println(user);
+        List<AdminRole> roleList=userService.roleList(user.getUsername());
+        for(AdminRole i:roleList)
+        {
+            if(i.getId()==1||i.getId()==2)
+                return ResultFactory.buildSuccessResult(null);
+        }
+        return ResultFactory.buildFailResult("不是管理员");
     }
 }

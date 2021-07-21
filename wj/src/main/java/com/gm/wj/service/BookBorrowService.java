@@ -95,4 +95,15 @@ public class BookBorrowService {
     public BookBorrow findByBorrowid(int borrow_id){
         return findByBorrowid(borrow_id);
     }
+
+    public List<BookBorrow> historyList(){
+        List<BookBorrow> bookBorrowList=bookBorrowDAO.findAll();
+        List<BookBorrow> result=new ArrayList<BookBorrow>();
+        for (BookBorrow bookBorrow:bookBorrowList) {
+            if(bookBorrow.getReturndate()!=null) {
+                result.add(bookBorrow);
+            }
+        }
+        return result;
+    }
 }

@@ -2,6 +2,7 @@ package com.gm.wj.service;
 
 import com.gm.wj.dao.BookBorrowDAO;
 import com.gm.wj.dao.FineDAO;
+import com.gm.wj.entity.Book;
 import com.gm.wj.entity.BookBorrow;
 import com.gm.wj.entity.Fine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,11 +46,21 @@ public class FineService {
         {
             BookBorrow temple=i.getBookborrow();
             int days=(int)((temple.getReturndate().getTime()-temple.getEnddate().getTime())/(1000*24*60*60));
-            i.setDays(days);
-            if(days<=0)
-                i.setFine(0.00);
-            else
-                i.setFine(0.10*days);
+            i.setDays(Math.max(days,0));
+            i.setFine(i.getDays()*0.1);
         }
+    }
+
+    public void renew(){
+        List<BookBorrow> borrowList=bookBorrowService.historyList();
+        List<Fine> fineList=new ArrayList<Fine>();
+        fineDAO.deleteAll();
+
+        for(BookBorrow i:borrowList)
+        {
+            Fine temple=new Fine(i);
+            fineList.add(temple);
+        }
+        fineDAO.saveAll(fineList);
     }
 }

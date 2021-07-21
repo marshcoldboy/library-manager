@@ -1,8 +1,6 @@
 package com.gm.wj.controller;
 
-import com.gm.wj.entity.Book;
-import com.gm.wj.entity.BookBorrow;
-import com.gm.wj.entity.Category;
+import com.gm.wj.entity.*;
 import com.gm.wj.result.Result;
 import com.gm.wj.result.ResultFactory;
 import com.gm.wj.service.BookBorrowService;
@@ -105,5 +103,4 @@ public class LibraryController {
             return "";
         }
     }
-
 }

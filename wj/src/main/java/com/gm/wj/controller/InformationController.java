@@ -66,6 +66,8 @@ public class InformationController {
 
     @PostMapping("/api/userCenter/fine_information")
     public Result fineInformation(@RequestBody @Valid User user){
+        //fineService.refresh();
+        //fineService.renew();
         return ResultFactory.buildSuccessResult(fineService.fineInformation(user.getUsername()));
     }
 

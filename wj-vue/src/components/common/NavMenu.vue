@@ -25,8 +25,6 @@
 
 <script>
 
-  import {createRouter} from '../../router'
-
   export default {
     name: 'NavMenu',
     data () {
@@ -85,10 +83,8 @@
         this.$axios.get('/logout').then(resp => {
           if (resp && resp.data.code === 200) {
             _this.$store.commit('logout')
-            _this.$router.replace('/index')
-            // 清空路由，防止路由重复加载
-            const newRouter = createRouter()
-            _this.$router.matcher = newRouter.matcher
+            _this.$router.go(0)
+
             this.showLogin = true
             this.showUser = false
           }
