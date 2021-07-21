@@ -64,6 +64,11 @@ export default new Router({
       component: () => import('../components/Register')
     },
     {
+      path: '/alterpassword',
+      name: 'ForgetPassword',
+      component: () => import('../components/AlterPassword')
+    },
+    {
       path: '/admin',
       name: 'Admin',
       component: () => import('../components/admin/AdminIndex'),
@@ -147,6 +152,11 @@ export const createRouter = routes => new Router({
       path: '/register',
       name: 'Register',
       component: () => import('../components/Register')
+    },
+    {
+      path: '/alterpassword',
+      name: 'ForgetPassword',
+      component: () => import('../components/AlterPassword')
     },
     {
       path: '/admin',
