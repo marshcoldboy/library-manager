@@ -197,8 +197,8 @@
             <p class="info">手机号：  {{user.phone}}</p>
             <p class="info">邮箱： {{user.email}}</p>
           </div>
-          <el-button style="position: absolute;margin-left: 800px;margin-top: -100px" type="primary" icon="el-icon-setting" @click="alterUser()">修改
-          </el-button>
+          <el-button style="margin-left: 690px;margin-top: -100px" type="primary" icon="el-icon-setting" @click="alterUser()">修改个人信息</el-button>
+            <el-button style="margin-left: 705px;margin-top: 10px" type="primary" icon="el-icon-setting" @click="alterPassword()">修改密码</el-button>
         </el-card>
       </div>
     </div>
@@ -343,6 +343,9 @@
       alterUser () { // 更改用户信息
         this.dialogFormVisible = true
       },
+      alterPassword () {
+        this.$router.push('./alterpassword')
+      },
       bookReturn (item) { // 图书归还
         this.$axios.post('/userCenter/bookReturn', {
           borrowid: item.borrowid
@@ -423,5 +426,11 @@
   }
   .block{
     margin: auto;
+  }
+  ::-webkit-scrollbar {
+    width: 0 !important;
+  }
+  ::-webkit-scrollbar {
+    width: 0 !important;height: 0;
   }
 </style>
