@@ -104,6 +104,16 @@
         </el-card>
       </div>
       <div id="fine">
+        <el-dialog
+          title="缴纳罚款"
+          :visible.sync="dialogFineVisible">
+          <div>
+            <img src="../../assets/img/icon/code.png">
+          </div>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFineVisible = false">取 消</el-button>
+          </div>
+        </el-dialog>
         <el-card class="userCenter">
           <i class="el-icon-warning-outline"/>
           超期罚款
@@ -157,7 +167,8 @@
               <template slot-scope="scope">
                 <el-button
                   type="text"
-                  size="small">
+                  size="small"
+                @click="pay">
                   缴纳
                 </el-button>
               </template>
@@ -216,6 +227,7 @@
         borrowHistory: [],
         fine: [],
         dialogFormVisible: false,
+        dialogFineVisible: false,
         pickerOptions: {
           shortcuts: [{
             text: '最近一周',
@@ -310,6 +322,9 @@
             _this.fine = resp.data.result
           }
         })
+      },
+      pay () {
+        this.dialogFineVisible = true
       },
       loadUser () {
         var _this = this

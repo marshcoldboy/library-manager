@@ -24,8 +24,8 @@
                 auto-complete="off" placeholder="重复密码"></el-input>
     </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 40%;background: #505458;border: none" v-on:click="alterPassword">修改密码</el-button>
       <el-button type="primary" style="width: 40%;background: #505458;border: none" v-on:click="back">取消</el-button>
+      <el-button type="primary" style="width: 40%;background: #505458;border: none" v-on:click="alterPassword">修改密码</el-button>
     </el-form-item>
   </el-form>
   </body>
