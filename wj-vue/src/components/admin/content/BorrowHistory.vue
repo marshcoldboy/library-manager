@@ -112,7 +112,7 @@
       }
     },
     mounted () {
-      // this.loadBorrowHistory()
+      this.loadBorrowHistory()
     },
     computed: {
       tableHeight () {
@@ -122,7 +122,7 @@
     methods: {
       loadBorrowHistory () {
         var _this = this
-        this.$axios.get('/borrow_history_all').then(resp => {
+        this.$axios.get('/admin/borrow_history').then(resp => {
           if (resp && resp.data.code === 200) {
             _this.borrowHistory = resp.data.result
           }

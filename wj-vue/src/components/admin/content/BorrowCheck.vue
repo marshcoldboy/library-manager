@@ -15,27 +15,32 @@
           <span style="font-size: 20px">借阅确认</span>
         </p>
         <el-table
-          :data="bookborrow"
+          :data="bookReturn"
           style="width: 100%;margin-top: 10px"
           max-height="500">
           <el-table-column
-            prop="username"
+            prop="bookborrow.username"
             label="用户"
             width="150">
           </el-table-column>
           <el-table-column
-            prop="title"
+            prop="bookborrow.title"
             label="书名"
             width="180">
           </el-table-column>
           <el-table-column
-            prop="startdate"
+            prop="bookborrow.startdate"
             label="借阅日期"
             width="180">
           </el-table-column>
           <el-table-column
-            prop="enddate"
-            label="归还日期"
+            prop="bookborrow.enddate"
+            label="规定归还日期"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="returndate"
+            label="实际归还日期"
             width="180">
           </el-table-column>
           <el-table-column
@@ -44,20 +49,21 @@
             width="150">
           </el-table-column>
           <el-table-column
-            prop="status"
-            label="缴纳状态"
-            width="150">
-          </el-table-column>
-          <el-table-column
             label="操作"
             width="120">
             <template slot-scope="scope">
-              <el-button
-                @click="bookReturnCheck(scope.row)"
+              <span><el-button
+                @click="acceptBookReturn(scope.row)"
                 type="text"
                 size="small">
-                确认归还
-              </el-button>
+                确认
+              </el-button></span>
+              <span><el-button
+                @click="refuseBookReturn(scope.row)"
+                type="text"
+                size="small">
+                拒绝
+              </el-button></span>
             </template>
           </el-table-column>
         </el-table>
@@ -67,56 +73,66 @@
 </template>
 
 <script>
-import EditForm from './EditForm'
-export default {
-  name: 'BorrowCheck',
-  components: {EditForm},
-  data () {
-    return {
-      bookReturn: []
-    }
-  },
-  mounted () {
-    // this.loadBookReturn()
-  },
-  computed: {
-    tableHeight () {
-      return window.innerHeight - 320
-    }
-  },
-  methods: {
-    loadBookReturn () {
-      var _this = this
-      this.$axios.get('/return_information').then(resp => {
-        if (resp && resp.data.code === 200) {
-          _this.bookReturn = resp.data.result
-        }
-      })
+  import EditForm from './EditForm'
+  export default {
+    name: 'BorrowCheck',
+    components: {EditForm},
+    data () {
+      return {
+        bookReturn: []
+      }
     },
-    bookReturnCheck (item) {
-      this.$axios.post('/checkReturn', {
-        borrowid: item.borrowid
-      }).then(successResponse => {
-        if (successResponse.data.code === 200) {
-          alert('归还成功')
-          this.loadBookReturn()
-        } else {
-          alert('归还失败')
-          this.loadBookReturn()
-        }
-      })
+    mounted () {
+      this.loadBookReturn()
+    },
+    computed: {
+      tableHeight () {
+        return window.innerHeight - 320
+      }
+    },
+    methods: {
+      loadBookReturn () {
+        var _this = this
+        this.$axios.get('/admin/book_return_information').then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.bookReturn = resp.data.result
+          }
+        })
+      },
+      acceptBookReturn (item) {
+        this.$axios.post('/admin/book_return/consent', {
+          borrowid: item.bookborrow.borrowid
+        }).then(successResponse => {
+          if (successResponse.data.code === 200) {
+            alert('归还成功')
+            this.loadBookReturn()
+          } else {
+            alert('归还失败')
+            this.loadBookReturn()
+          }
+        })
+      },
+      refuseBookReturn (item) {
+        this.$axios.post('/admin/book_return/deny', {
+          borrowid: item.bookborrow.borrowid
+        }).then(successResponse => {
+          if (successResponse.data.code === 200) {
+            alert('拒绝归还')
+            this.loadBookReturn()
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style scoped>
-.fixed {
-  position: fixed;
-  bottom: 100px;
-  top: 150px;/*开始处于距离顶部300px的位置，之后随着滚动条滚动top值改变，然后在top==100时停止*/
-  left: 60px;
-  box-sizing: border-box;
-  z-index: 2;
-}
+  .fixed {
+    position: fixed;
+    bottom: 100px;
+    top: 150px;/*开始处于距离顶部300px的位置，之后随着滚动条滚动top值改变，然后在top==100时停止*/
+    left: 60px;
+    box-sizing: border-box;
+    z-index: 2;
+  }
 </style>

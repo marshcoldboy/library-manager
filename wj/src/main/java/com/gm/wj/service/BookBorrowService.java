@@ -2,6 +2,7 @@ package com.gm.wj.service;
 
 import com.gm.wj.dao.BookBorrowDAO;
 import com.gm.wj.entity.BookBorrow;
+import com.gm.wj.entity.BookReturn;
 import com.gm.wj.entity.Fine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,8 @@ public class BookBorrowService {
 
     @Autowired
     BookBorrowDAO bookBorrowDAO;
-
     @Autowired
-    FineService fineService;
+    BookReturnService bookReturnService;
 
     Calendar calendar=new GregorianCalendar();
 
@@ -41,7 +41,7 @@ public class BookBorrowService {
         return(bookBorrowDAO.findAllByUsername(username));
     }
 
-    public List<BookBorrow> newList(String username){
+    public List<BookBorrow> nowList(String username){
         List<BookBorrow> bookBorrowList=bookBorrowDAO.findAllByUsername(username);
         List<BookBorrow> result=new ArrayList<BookBorrow>();
         Date date=new Date(System.currentTimeMillis());
@@ -49,6 +49,19 @@ public class BookBorrowService {
             if(bookBorrow.getReturndate()==null) {
                 int days=(int) ((bookBorrow.getEnddate().getTime() - date.getTime()) / (24 * 60 * 60 * 1000));
                 bookBorrow.setDays(Math.max(days, 0));
+                result.add(bookBorrow);
+            }
+        }
+        return result;
+    }
+
+    public List<BookBorrow> nowList(){
+        List<BookBorrow> bookBorrowList=bookBorrowDAO.findAll();
+        List<BookBorrow> result=new ArrayList<BookBorrow>();
+        for (BookBorrow bookBorrow:bookBorrowList) {
+            if(bookBorrow.getReturndate()==null) {
+                int days=(int) ((bookBorrow.getEnddate().getTime() - bookBorrow.getStartdate().getTime()) / (24 * 60 * 60 * 1000));
+                bookBorrow.setStatus(days>14?"是":"否");
                 result.add(bookBorrow);
             }
         }
@@ -72,13 +85,25 @@ public class BookBorrowService {
         return result;
     }
 
+    public List<BookBorrow> historyList(){
+        List<BookBorrow> bookBorrowList=bookBorrowDAO.findAll();
+        List<BookBorrow> result=new ArrayList<BookBorrow>();
+        for (BookBorrow bookBorrow:bookBorrowList) {
+            if(bookBorrow.getReturndate()!=null) {
+                long time=bookBorrow.getReturndate().getTime()-bookBorrow.getEnddate().getTime();
+                bookBorrow.setStatus(time<=0?"按时归还":"逾期归还");
+                result.add(bookBorrow);
+            }
+        }
+        return result;
+    }
+
     public BookBorrow returnBook(int borrow_id){
         BookBorrow bookBorrow=bookBorrowDAO.findByBorrowid(borrow_id);
-        bookBorrow.setReturndate(new Date(System.currentTimeMillis()));
-        bookBorrowDAO.saveAndFlush(bookBorrow);
 
-        Fine fine=new Fine(bookBorrow);
-        fineService.save(fine);
+        BookReturn bookReturn=new BookReturn(bookBorrow,new Date(System.currentTimeMillis()));
+        bookReturnService.save(bookReturn);
+
         return bookBorrow;
     }
 
@@ -96,14 +121,9 @@ public class BookBorrowService {
         return findByBorrowid(borrow_id);
     }
 
-    public List<BookBorrow> historyList(){
-        List<BookBorrow> bookBorrowList=bookBorrowDAO.findAll();
-        List<BookBorrow> result=new ArrayList<BookBorrow>();
-        for (BookBorrow bookBorrow:bookBorrowList) {
-            if(bookBorrow.getReturndate()!=null) {
-                result.add(bookBorrow);
-            }
-        }
-        return result;
+
+
+    public void save(BookBorrow bookBorrow){
+        bookBorrowDAO.saveAndFlush(bookBorrow);
     }
 }

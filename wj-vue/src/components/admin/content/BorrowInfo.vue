@@ -39,7 +39,7 @@
             width="250">
           </el-table-column>
           <el-table-column
-            prop="renew"
+            prop="status"
             label="是否续借"
             width="150">
           </el-table-column>
@@ -60,7 +60,7 @@ export default {
     }
   },
   mounted () {
-    // this.loadBookBorrow()
+    this.loadBookBorrow()
   },
   computed: {
     tableHeight () {
@@ -70,7 +70,7 @@ export default {
   methods: {
     loadBookBorrow () {
       var _this = this
-      this.$axios.get('/userCenter/borrow_information_all').then(resp => {
+      this.$axios.get('/admin/borrow_information').then(resp => {
         if (resp && resp.data.code === 200) {
           _this.bookborrow = resp.data.result
         }
