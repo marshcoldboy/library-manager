@@ -1,5 +1,5 @@
 <template>
-  <el-menu
+  <el-menu class="side-menu"
     default-active="1"
     style="width: 170px">
     <a href="#current-borrow">
@@ -39,5 +39,8 @@ export default {
 a {
   text-decoration: none;
   color: inherit;
+}
+.side-menu {
+  border-radius: 15px;
 }
 </style>

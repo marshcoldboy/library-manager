@@ -16,11 +16,11 @@ export default {
     },
     width: {
       type: String,
-      default: '100%'
+      default: '250px'
     },
     height: {
       type: String,
-      default: '300px'
+      default: '250px'
     }
   },
   data () {
@@ -52,21 +52,22 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          data: ['文学', '流行', '文化', '生活', '经管', '科技']
         },
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '图书类型',
             type: 'pie',
             roseType: 'radius',
-            radius: [15, 95],
-            center: ['50%', '38%'],
+            radius: [10, 50],
+            center: ['50%', '50%'],
             data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
+              { value: 320, name: '文学' },
+              { value: 240, name: '流行' },
+              { value: 149, name: '文化' },
+              { value: 100, name: '生活' },
+              { value: 59, name: '经管' },
+              {value: 78, name: '科技'}
             ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
