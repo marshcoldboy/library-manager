@@ -44,7 +44,7 @@
 // import GithubCorner from '@/components/GithubCorner'
 import PanelGroup from './components/PanelGroup'
 import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
+import PieChart from './components/PieChartBook'
 import LineChart from './components/LineChart'
 import BarChart from './components/BarChart'
 import TransactionTable from './components/TransactionTable'

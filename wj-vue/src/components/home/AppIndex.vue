@@ -40,6 +40,7 @@
   }
 
   #header-div {
+    border-radius: 4px;
     padding-bottom: 20px;
     padding-left: 5px;
     background-color: rgba(0,0,0,0.3);
