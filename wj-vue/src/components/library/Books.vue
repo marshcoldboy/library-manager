@@ -8,9 +8,13 @@
         <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.title}}</p>
         <p slot="content" style="font-size: 13px;margin-bottom: 6px">
           <span>{{item.author}}</span> /
-          <span>{{item.price}}</span> /
-          <span>{{item.isbn}}</span> /
           <span>{{item.press}}</span>
+        </p>
+        <p slot="content" style="font-size: 13px;margin-bottom: 6px">
+          ISBN:{{item.isbn}}
+        </p>
+        <p slot="content" style="font-size: 13px;margin-bottom: 6px">
+          价格：{{item.price}}
         </p>
         <p slot="content" style="width: 300px" class="abstract">{{item.abs}}</p>
         <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
