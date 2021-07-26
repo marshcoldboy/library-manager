@@ -33,17 +33,22 @@
             <el-table-column
               prop="startdate"
               label="借阅日期"
-              width="200">
+              width="160">
             </el-table-column>
             <el-table-column
               prop="enddate"
               label="预定归还日期"
-              width="200">
+              width="160">
             </el-table-column>
             <el-table-column
               prop="days"
               label="归还剩余天数"
-              width="200">
+              width="100">
+            </el-table-column>
+            <el-table-column
+              prop="status"
+              label="归还状态"
+              width="160">
             </el-table-column>
             <el-table-column
               fixed="right"
