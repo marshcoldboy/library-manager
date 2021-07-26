@@ -80,7 +80,7 @@
     data () {
       return {
         borrowHistory: [],
-        date: null,
+        date: '',
         username: '',
         pickerOptions: {
           shortcuts: [{
@@ -130,7 +130,7 @@
       },
       loadBorrowHistoryAccordingDate () {
         var _this = this
-        this.$axios.post('/borrow_history_all_accordingDate', {
+        this.$axios.post('/admin/borrow_history_all_accordingDate', {
           date: this.date
         }).then(resp => {
           if (resp && resp.data.code === 200) {
@@ -140,7 +140,7 @@
       },
       loadBorrowHistoryAccordingUsername () {
         var _this = this
-        this.$axios.post('/userCenter/borrow_history', {
+        this.$axios.post('/admin/borrow_history_all_accordingUsername', {
           username: this.username
         }).then(resp => {
           if (resp && resp.data.code === 200) {
@@ -149,22 +149,26 @@
         })
       },
       loadBorrowHistoryAccordingDateAndUsername () {
-        if (this.user !== '' && this.date === null) {
+        if (this.user === '' && this.date === null) {
+          this.loadBorrowHistory()
+        } else if (this.user !== '' && this.date === null) {
           this.loadBorrowHistoryAccordingUsername()
         } else if (this.user === '' && this.date !== null) {
           this.loadBorrowHistoryAccordingDate()
         } else {
-          this.$axios.post('/borrow_history_all_accordingDateAndUsername', {
-            userName: this.username,
-            date: this.date
-          }).then(resp => {
-            if (resp && resp.data.code === 200) {
-              this.borrowHistory = resp.data.result
-            }
-          })
-        }
+        var _this = this
+        this.$axios.post('/admin/borrow_history_all_accordingDateAndUsername', {
+          username: this.username,
+          startdate: this.date[0],
+          returndate: this.date[1]
+        }).then(resp => {
+          if (resp && resp.data.code === 200) {
+            _this.borrowHistory = resp.data.result
+          }
+        })
       }
     }
+     }
   }
 </script>
 

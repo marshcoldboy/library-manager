@@ -36,7 +36,7 @@ public class BookBorrow {
     @Transient
     int days;
 
-    @Transient
+    @Column(name = "status")
     String status;
 
     public String getStatus() {

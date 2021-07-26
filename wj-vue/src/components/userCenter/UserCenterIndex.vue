@@ -321,7 +321,8 @@
         var _this = this
         this.$axios.post('/userCenter/fineAccordingDate', {
           username: this.$store.state.username,
-          date: this.date
+          startdate: this.date[0],
+          returndate: this.date[1]
         }).then(resp => {
           if (resp && resp.data.code === 200) {
             _this.fine = resp.data.result

@@ -34,6 +34,7 @@ public class BookBorrowService {
         bookborrow.setStartdate(startDate);
         bookborrow.setEnddate(endDate);
 //        bookborrow.setReturndate(returnDate);
+        bookborrow.setStatus("借阅中");
         bookBorrowDAO.saveAndFlush(bookborrow);
     }
 
@@ -49,6 +50,7 @@ public class BookBorrowService {
             if(bookBorrow.getReturndate()==null) {
                 int days=(int) ((bookBorrow.getEnddate().getTime() - date.getTime()) / (24 * 60 * 60 * 1000));
                 bookBorrow.setDays(Math.max(days, 0));
+//                bookBorrow.setStatus("借阅中");
                 result.add(bookBorrow);
             }
         }
@@ -73,12 +75,12 @@ public class BookBorrowService {
         List<BookBorrow> result=new ArrayList<BookBorrow>();
         for (BookBorrow bookBorrow:bookBorrowList) {
             if(bookBorrow.getReturndate()!=null) {
-                long time=bookBorrow.getReturndate().getTime()-bookBorrow.getEnddate().getTime();
-                if (time <= 0) {
-                    bookBorrow.setStatus("按时归还");
-                } else {
-                    bookBorrow.setStatus("逾期归还");
-                }
+//                long time=bookBorrow.getReturndate().getTime()-bookBorrow.getEnddate().getTime();
+//                if (time <= 0) {
+//                    bookBorrow.setStatus("按时归还");
+//                } else {
+//                    bookBorrow.setStatus("逾期归还");
+//                }
                 result.add(bookBorrow);
             }
         }
@@ -90,8 +92,8 @@ public class BookBorrowService {
         List<BookBorrow> result=new ArrayList<BookBorrow>();
         for (BookBorrow bookBorrow:bookBorrowList) {
             if(bookBorrow.getReturndate()!=null) {
-                long time=bookBorrow.getReturndate().getTime()-bookBorrow.getEnddate().getTime();
-                bookBorrow.setStatus(time<=0?"按时归还":"逾期归还");
+//                long time=bookBorrow.getReturndate().getTime()-bookBorrow.getEnddate().getTime();
+//                bookBorrow.setStatus(time<=0?"按时归还":"逾期归还");
                 result.add(bookBorrow);
             }
         }
@@ -100,8 +102,13 @@ public class BookBorrowService {
 
     public BookBorrow returnBook(int borrow_id){
         BookBorrow bookBorrow=bookBorrowDAO.findByBorrowid(borrow_id);
-
-        BookReturn bookReturn=new BookReturn(bookBorrow,new Date(System.currentTimeMillis()));
+        bookBorrow.setStatus("申请归还中，等待管理员审核");
+        BookReturn bookReturn = bookReturnService.findByBookBorrow(bookBorrow);
+        if(bookReturn==null)
+            bookReturn=new BookReturn(bookBorrow,new Date(System.currentTimeMillis()));
+        else
+            bookReturn.setDeny(false);
+        bookBorrowDAO.saveAndFlush(bookBorrow);
         bookReturnService.save(bookReturn);
 
         return bookBorrow;
@@ -118,10 +125,40 @@ public class BookBorrowService {
     }
 
     public BookBorrow findByBorrowid(int borrow_id){
-        return findByBorrowid(borrow_id);
+        return bookBorrowDAO.findByBorrowid(borrow_id);
     }
 
+    public List<BookBorrow> findByDateAndUsername(BookBorrow bookBorrow){
+        Date startDate=bookBorrow.getStartdate();
+        Date returnDate=bookBorrow.getReturndate();
+        List<BookBorrow> bookBorrowList;
+        List<BookBorrow> result=new ArrayList<>();
+        if(!bookBorrow.getUsername().equals(""))
+            bookBorrowList = this.historyList(bookBorrow.getUsername());
+        else
+            bookBorrowList=this.historyList();
+        if(startDate==null&&returnDate==null)
+            return bookBorrowList;
+        for(BookBorrow i:bookBorrowList){
+            if(i.getReturndate()!=null) {
+                if (i.getStartdate().getTime() >= startDate.getTime() && i.getReturndate().getTime() <= returnDate.getTime())
+                    result.add(i);
+            }
+        }
+        return result;
+    }
 
+    public List<BookBorrow> findByDate(BookBorrow bookBorrow){
+        Date startDate=bookBorrow.getStartdate();
+        Date returnDate=bookBorrow.getReturndate();
+        List<BookBorrow> bookBorrowList=bookBorrowDAO.findAll();
+        List<BookBorrow> result=new ArrayList<>();
+        for(BookBorrow i:bookBorrowList){
+            if (i.getStartdate().getTime() >= startDate.getTime() && i.getReturndate().getTime() <= returnDate.getTime())
+                result.add(i);
+        }
+        return result;
+    }
 
     public void save(BookBorrow bookBorrow){
         bookBorrowDAO.saveAndFlush(bookBorrow);

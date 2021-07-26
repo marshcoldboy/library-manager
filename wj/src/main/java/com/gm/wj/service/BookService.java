@@ -80,6 +80,6 @@ public class BookService {
     }
 
     public List<Book> Search(String keywords) {
-        return bookDAO.findAllByTitleLikeOrAuthorLike('%' + keywords + '%', '%' + keywords + '%');
+        return bookDAO.findAllByTitleLikeOrAuthorLikeOrPressLikeOrIsbnLike('%' + keywords + '%', '%' + keywords + '%', '%' + keywords + '%', '%' + keywords + '%');
     }
 }

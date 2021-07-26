@@ -1,6 +1,7 @@
 package com.gm.wj.controller;
 
 import com.gm.wj.entity.BookBorrow;
+import com.gm.wj.entity.Fine;
 import com.gm.wj.entity.User;
 import com.gm.wj.result.Result;
 import com.gm.wj.result.ResultFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class InformationController {
@@ -66,15 +68,12 @@ public class InformationController {
 
     @PostMapping("/api/userCenter/fine_information")
     public Result fineInformation(@RequestBody @Valid User user){
-        //fineService.refresh();
-        //fineService.renew();
         return ResultFactory.buildSuccessResult(fineService.fineInformation(user.getUsername()));
     }
 
     @PostMapping("/api/userCenter/fineAccordingDate")
-    public Result fineAccordingDate(@RequestBody @Valid String fine){
-//        System.out.println(fine);
-        return ResultFactory.buildSuccessResult(null);
+    public Result fineAccordingDate(@RequestBody @Valid BookBorrow bookBorrow){
+        return ResultFactory.buildSuccessResult(fineService.fineAccordingDate(bookBorrow));
     }
 
     @GetMapping("/api/admin/borrow_information")
@@ -89,6 +88,7 @@ public class InformationController {
 
     @PostMapping("/api/admin/book_return/consent")
     public Result adminConsent(@RequestBody @Valid BookBorrow bookBorrow){
+        System.out.println(bookBorrow);
         return ResultFactory.buildSuccessResult(bookReturnService.adminConsent(bookBorrow.getBorrowid()));
     }
 

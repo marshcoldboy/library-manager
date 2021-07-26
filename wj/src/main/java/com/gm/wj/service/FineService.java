@@ -4,6 +4,7 @@ import com.gm.wj.dao.BookBorrowDAO;
 import com.gm.wj.dao.FineDAO;
 import com.gm.wj.entity.Book;
 import com.gm.wj.entity.BookBorrow;
+import com.gm.wj.entity.BookReturn;
 import com.gm.wj.entity.Fine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,5 +63,22 @@ public class FineService {
             fineList.add(temple);
         }
         fineDAO.saveAll(fineList);
+    }
+
+    public List<Fine> fineAccordingDate(BookBorrow bookBorrow){
+        Date startDate=bookBorrow.getStartdate();
+        Date returnDate=bookBorrow.getReturndate();
+        List<Fine> bookFineList=fineDAO.findAllByUsername(bookBorrow.getUsername());
+        List<Fine> result=new ArrayList<>();
+        for(Fine i:bookFineList){
+            if (i.getBookborrow().getStartdate().getTime() >= startDate.getTime() && i.getBookborrow().getReturndate().getTime() <= returnDate.getTime()) {
+                if(i.getFine()==0.0)
+                    i.setStatus("按期归还");
+                else
+                    i.setStatus("需缴纳罚款"+i.getFine()+"元");
+                result.add(i);
+            }
+        }
+        return result;
     }
 }

@@ -15,6 +15,7 @@ import java.sql.Date;
 public class BookReturn {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "returnid")
     private int returnid;
 

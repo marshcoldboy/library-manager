@@ -77,6 +77,25 @@ public class LibraryController {
         }
     }
 
+    @PostMapping("/api/admin/borrow_history_all_accordingDateAndUsername")
+    public Result adminSearchAccordingDateAndUsername(@RequestBody @Valid BookBorrow bookBorrow){
+        return ResultFactory.buildSuccessResult(bookBorrowService.findByDateAndUsername(bookBorrow));
+    }
+
+    @PostMapping("/api/admin/borrow_history_all_accordingDate")
+    public Result adminSearchAccordingDate(BookBorrow bookBorrow){
+        return ResultFactory.buildSuccessResult(bookBorrowService.findByDate(bookBorrow));
+    }
+
+    @PostMapping("/api/admin/borrow_history_all_accordingUsername")
+    public Result adminSearchAccordingUsername(@RequestBody @Valid User user){
+        String username=user.getUsername();
+        if(!user.getUsername().equals(""))
+            return ResultFactory.buildSuccessResult(bookBorrowService.historyList(username));
+        else
+            return ResultFactory.buildSuccessResult(bookBorrowService.historyList());
+    }
+
     @GetMapping("/api/categories/{cid}/books")
     public Result listByCategory(@PathVariable("cid") int cid) {
         if (0 != cid) {
