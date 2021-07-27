@@ -31,6 +31,9 @@
             <el-col :span="12" offset="2"><div class="ISBN">ISBN： {{book.isbn}}</div></el-col>
           </el-row>
           <el-row :gutter="20">
+            <el-col :span="12" offset="2"><div class="amount">可接数量： {{book.amount}}</div></el-col>
+          </el-row>
+          <el-row :gutter="20">
             <el-col :span="16" offset="2">
               <div class="abstract bg-purple">
                 <el-container>
@@ -63,7 +66,8 @@
           isbn: '',
           press: '',
           price: '',
-          abs: ''
+          abs: '',
+          amount: ''
         },
         isUser: false
       }
@@ -86,8 +90,10 @@
       borrow (book) {
         // var _this = this
         this.$axios.post('/BookBorrow', {
+          bid: this.book.bid,
           title: this.book.title,
-          username: this.$store.state.username
+          username: this.$store.state.username,
+          amount: this.book.amount
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
             alert('借阅成功')
@@ -180,6 +186,11 @@
   .abstract {
     font-size: 15px;
     display: block;
+    text-align: left;
+    line-height: 40px;
+  }
+  .amount {
+    font-size: 15px;
     text-align: left;
     line-height: 40px;
   }

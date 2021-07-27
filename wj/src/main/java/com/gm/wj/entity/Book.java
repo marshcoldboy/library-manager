@@ -43,17 +43,23 @@ public class Book {
     @Column(name="ISBN")
     private String isbn;
 
+    @Column(name = "price")
     private int price;
 
     /**
      * Abstract of the book.
      */
+    @Column(name = "abs")
     private String abs;
 
     /**
      * The url of the book's cover.
      */
+    @Column(name = "cover")
     private String cover;
+
+    @Column(name = "amount")
+    private int amount;
 
     /**
      * Category id.

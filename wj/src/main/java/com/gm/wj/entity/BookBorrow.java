@@ -55,13 +55,11 @@ public class BookBorrow {
         this.days = days;
     }
 
-    public BookBorrow(int borrow_id, String username, String title, Date startdate, Date enddate, Date returndate) {
-        this.borrowid = borrow_id;
+    public BookBorrow(String username, String title, Date startdate, Date enddate, String status) {
         this.username = username;
         this.title = title;
         this.startdate = startdate;
         this.enddate = enddate;
-        this.returndate = returndate;
     }
 
     public BookBorrow() {

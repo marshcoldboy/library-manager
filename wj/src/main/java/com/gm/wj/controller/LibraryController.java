@@ -36,8 +36,12 @@ public class LibraryController {
 
     @PostMapping("/api/BookBorrow")
     public Result subscribe(@RequestBody @Valid BookBorrow bookBorrow){
-        bookBorrowService.add(bookBorrow);
-        return ResultFactory.buildSuccessResult("修改成功");
+        if(!bookService.borrowJudge(bookBorrow.getTitle()))
+            return ResultFactory.buildFailResult("无剩余可借藏本");
+        else {
+            bookBorrowService.add(bookBorrow);
+            return ResultFactory.buildSuccessResult("修改成功");
+        }
     }
 
     @GetMapping("/api/books")

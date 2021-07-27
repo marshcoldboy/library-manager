@@ -88,7 +88,6 @@ public class InformationController {
 
     @PostMapping("/api/admin/book_return/consent")
     public Result adminConsent(@RequestBody @Valid BookBorrow bookBorrow){
-        System.out.println(bookBorrow);
         return ResultFactory.buildSuccessResult(bookReturnService.adminConsent(bookBorrow.getBorrowid()));
     }
 
