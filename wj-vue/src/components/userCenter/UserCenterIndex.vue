@@ -1,5 +1,5 @@
 <template>
-  <div class="userCenterIndex">
+  <div class="userCenterIndex" id="bg">
     <el-backtop target=".userCenterIndex">
       <div
         style="{
@@ -398,6 +398,12 @@
   }
 </script>
 <style scoped>
+  #bg{
+  background:url("../../assets/img/bg/2.jpg");
+  width:100%;
+  height:100%;
+  background-attachment:fixed;
+  background-size:100% 100%;}
   .userCenterIndex{
     height: 100vh;
     overflow-x: hidden;
