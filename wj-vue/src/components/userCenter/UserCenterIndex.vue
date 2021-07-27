@@ -390,7 +390,7 @@
             this.loadBookBorrow()
             this.loadBorrowHistory()
           } else {
-            alert('该书籍当前状态不可借阅')
+            alert(successResponse.data.message)
           }
         })
       }
@@ -399,7 +399,7 @@
 </script>
 <style scoped>
   #bg{
-  background:url("../../assets/img/bg/2.jpg");
+  background:url("../../assets/img/bg/bg2.jpg");
   width:100%;
   height:100%;
   background-attachment:fixed;
