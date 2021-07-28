@@ -4,7 +4,7 @@
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/admin/dashboard' }">管理中心</el-breadcrumb-item>
         <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-        <el-breadcrumb-item>借阅确认</el-breadcrumb-item>
+        <el-breadcrumb-item>归还确认</el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
     <el-card style="width: 95%;margin: 40px 2% 18px;">
@@ -91,7 +91,7 @@
       }
     },
     methods: {
-      loadBookReturn () {
+      loadBookReturn () { // 加载需要确认的归还请求
         var _this = this
         this.$axios.get('/admin/book_return_information').then(resp => {
           if (resp && resp.data.code === 200) {
@@ -99,7 +99,7 @@
           }
         })
       },
-      acceptBookReturn (item) {
+      acceptBookReturn (item) { // 确认归还
         this.$axios.post('/admin/book_return/consent', {
           borrowid: item.bookborrow.borrowid
         }).then(successResponse => {
@@ -112,7 +112,7 @@
           }
         })
       },
-      refuseBookReturn (item) {
+      refuseBookReturn (item) { // 拒绝归还
         this.$axios.post('/admin/book_return/deny', {
           borrowid: item.bookborrow.borrowid
         }).then(successResponse => {

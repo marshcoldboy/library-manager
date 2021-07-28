@@ -56,12 +56,14 @@
               width="120">
               <template slot-scope="scope">
                 <el-button
+                  :disabled="scope.row.status == '申请归还中，等待管理员审核'"
                   @click="bookReturn(scope.row)"
                   type="text"
                   size="small">
                   归还
                 </el-button>
                 <el-button
+                  :disabled="scope.row.status == '申请归还中，等待管理员审核'"
                   @click="bookRenew(scope.row)"
                   type="text"
                   size="small">
@@ -213,8 +215,8 @@
             <p class="info">手机号：  {{user.phone}}</p>
             <p class="info">邮箱： {{user.email}}</p>
           </div>
-          <el-button style="margin-left: 690px;margin-top: -100px" type="primary" icon="el-icon-setting" @click="alterUser()">修改个人信息</el-button>
-            <el-button style="margin-left: 705px;margin-top: 10px" type="primary" icon="el-icon-setting" @click="alterPassword()">修改密码</el-button>
+          <el-button style="margin-left: 690px;margin-top: -100px;width: 160px" type="primary" icon="el-icon-setting" @click="alterUser()">修改个人信息</el-button>
+            <el-button style="margin-left: 690px;margin-top: 10px;width: 160px" type="primary" icon="el-icon-setting" @click="alterPassword()">修改密码</el-button>
         </el-card>
       </div>
     </div>
@@ -227,13 +229,13 @@
     components: {SideMenu},
     data () {
       return {
-        user: {},
-        bookborrow: [],
-        borrowHistory: [],
-        fine: [],
-        dialogFormVisible: false,
-        dialogFineVisible: false,
-        pickerOptions: {
+        user: {}, // 个人信息
+        bookborrow: [], // 当前借阅信息
+        borrowHistory: [], // 借阅历史
+        fine: [], // 超期罚款信息
+        dialogFormVisible: false, // 修改个人信息对话框
+        dialogFineVisible: false, // 缴纳罚款对话框
+        pickerOptions: { // 日期快捷选择
           shortcuts: [{
             text: '最近一周',
             onClick (picker) {
@@ -272,7 +274,7 @@
       window.addEventListener('scroll', this.handleScroll)
     },
     methods: {
-      handleScroll () { // 改变元素的top值
+      handleScroll () { // 侧边栏随滚轮移动
         debugger
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         var offsetTop = document.querySelector('#side-menu').offsetTop
@@ -297,7 +299,7 @@
           }
         })
       },
-      loadBorrowHistory () {
+      loadBorrowHistory () { // 加载借阅历史信息
         var _this = this
         this.$axios.post('/userCenter/borrow_history', {
           username: this.$store.state.username
@@ -307,7 +309,7 @@
           }
         })
       },
-      loadFine () {
+      loadFine () { // 加载超期罚款信息
         var _this = this
         this.$axios.post('/userCenter/fine_information', {
           username: this.$store.state.username
@@ -317,7 +319,7 @@
           }
         })
       },
-      loadFineAccordingDate () {
+      loadFineAccordingDate () { // 根据日期对罚款信息进行查询
         var _this = this
         this.$axios.post('/userCenter/fineAccordingDate', {
           username: this.$store.state.username,
@@ -329,10 +331,10 @@
           }
         })
       },
-      pay () {
+      pay () { // 缴纳罚款
         this.dialogFineVisible = true
       },
-      loadUser () {
+      loadUser () { // 加载个人信息
         var _this = this
         this.$axios.post('/userCenter/user_information', {
           username: this.$store.state.username
@@ -342,7 +344,7 @@
           }
         })
       },
-      onSubmit (user) {
+      onSubmit (user) { // 向后端发送需要更改的个人信息
         // 根据视图绑定的角色 id 向后端传送角色信息
         this.$axios.post('/userCenter/user_information/alterUser', {
           username: user.username,
@@ -364,7 +366,7 @@
       alterUser () { // 更改用户信息
         this.dialogFormVisible = true
       },
-      alterPassword () {
+      alterPassword () { // 修改密码
         this.$router.push('./alterpassword')
       },
       bookReturn (item) { // 图书归还
@@ -372,9 +374,9 @@
           borrowid: item.borrowid
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
-            alert('归还成功')
+            alert('已发送归还请求，等待管理员确认')
           } else {
-            alert('您已超期，请缴纳罚款')
+            alert('归还失败，请使用人工服务')
           }
           this.loadBookBorrow()
           this.loadBorrowHistory()
@@ -399,7 +401,7 @@
 </script>
 <style scoped>
   #bg{
-  background:url("../../assets/img/bg/2.jpg");
+  background:url("../../assets/img/bg/bg2.jpg");
   width:100%;
   height:100%;
   background-attachment:fixed;

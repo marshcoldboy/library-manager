@@ -39,10 +39,10 @@
       }
     },
     methods: {
-      login () {
+      login () { // 登录按钮
         var _this = this
         this.$axios
-          .post('/login', {
+          .post('/login', { // 向后端发送用户名和密码
             username: this.loginForm.username,
             password: this.loginForm.password
           })

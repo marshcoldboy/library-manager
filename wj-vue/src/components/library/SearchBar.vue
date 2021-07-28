@@ -23,7 +23,7 @@
         }
       },
       methods: {
-        searchClick () {
+        searchClick () { // 图书搜索
           this.$emit('onSearch')
         }
       }

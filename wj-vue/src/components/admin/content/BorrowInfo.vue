@@ -68,7 +68,7 @@ export default {
     }
   },
   methods: {
-    loadBookBorrow () {
+    loadBookBorrow () { // 加载当前借阅信息
       var _this = this
       this.$axios.get('/admin/borrow_information').then(resp => {
         if (resp && resp.data.code === 200) {

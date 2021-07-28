@@ -3,7 +3,7 @@
       <a href="https://gitee.com/shao-yuanjie/library-manager/blob/master/readme.md" target="_blank">
         <img src="../../assets/img/icon/icon5.png" alt="" class="readme">
       </a>
-      <img src="../../assets/img/icon/niuniu.jpg" alt="" class="logo">
+      <img src="../../assets/img/icon/niuniu.png" alt="" class="logo">
     </div>
 </template>
 

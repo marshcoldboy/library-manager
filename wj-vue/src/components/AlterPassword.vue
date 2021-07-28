@@ -37,12 +37,12 @@ export default{
       rules: {
         username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
         email: [{required: true, message: '请输入邮箱', trigger: 'blur'}],
-        password: [{required: true, message: '密码不能为空', trigger: 'blur'}],
-        repeat: [{required: true, message: '请重复一遍密码', trigger: 'blur'}],
-        verificationCode: [{required: true, message: '请输入验证码', trigger: 'blur'}]
+        password: [{required: true, message: '密码不能为空', trigger: 'blur'}], // 输入新密码
+        repeat: [{required: true, message: '请重复一遍密码', trigger: 'blur'}], // 重复一遍新密码
+        verificationCode: [{required: true, message: '请输入验证码', trigger: 'blur'}] // 验证码
       },
       checked: true,
-      loginForm: {
+      loginForm: { // 修改密码的表单内容
         username: '',
         password: '',
         repeat: '',
@@ -54,7 +54,7 @@ export default{
     }
   },
   methods: {
-    back () {
+    back () { // 取消更改密码回到登录界面
       this.$router.push('./Login')
     }
   }

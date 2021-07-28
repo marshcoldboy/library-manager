@@ -11,10 +11,10 @@
           <span>{{item.press}}</span>
         </p>
         <p slot="content" style="font-size: 13px;margin-bottom: 6px">
-          ISBN:{{item.isbn}}
+          ISBN: {{item.isbn}}
         </p>
         <p slot="content" style="font-size: 13px;margin-bottom: 6px">
-          价格：{{item.price}}
+          价格：{{item.price}} 元
         </p>
         <p slot="content" style="width: 300px" class="abstract">{{item.abs}}</p>
         <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
@@ -59,7 +59,7 @@
       this.loadBooks()
     },
     methods: {
-      loadBooks () {
+      loadBooks () { // 加载图书
         var _this = this
         this.$axios.get('/books').then(resp => {
           if (resp && resp.data.code === 200) {
@@ -70,7 +70,7 @@
       handleCurrentChange: function (currentPage) {
         this.currentPage = currentPage
       },
-      searchResult () {
+      searchResult () { // 显示搜索结果
         var _this = this
         this.$axios
           .get('/search?keywords=' + this.$refs.searchBar.keywords, {
@@ -80,7 +80,7 @@
           }
         })
       },
-      showBookInfo (item) {
+      showBookInfo (item) { // 点击图书进入详情页
         this.$router.push({
           path: './bookInfo',
           query: {

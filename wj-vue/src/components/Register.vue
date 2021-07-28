@@ -50,7 +50,7 @@
       }
     },
     methods: {
-      register () {
+      register () { // 注册按钮
         var _this = this
         this.$axios
           .post('/register', {
