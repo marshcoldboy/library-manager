@@ -51,7 +51,7 @@
           nameZh: ''
         }
       },
-      createRole () {
+      createRole () { // 创建角色
         this.$axios
           .post('/admin/role', {
             name: this.roleForm.name,

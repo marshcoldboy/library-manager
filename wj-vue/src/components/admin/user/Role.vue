@@ -189,7 +189,7 @@
           this.$alert('无法禁用系统管理员！')
         }
       },
-    editRole (role) {
+    editRole (role) { // 添加角色
       this.dialogFormVisible = true
       this.selectedRole = role
       let permIds = []

@@ -32,7 +32,7 @@
         }
       },
       computed: {
-        adminMenus () {
+        adminMenus () { // 动态加载管理菜单
           return this.$store.state.adminMenus
         },
         currentPath () {

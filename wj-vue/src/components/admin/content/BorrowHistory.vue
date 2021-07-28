@@ -120,7 +120,7 @@
       }
     },
     methods: {
-      loadBorrowHistory () {
+      loadBorrowHistory () { // 加载借阅历史
         var _this = this
         this.$axios.get('/admin/borrow_history').then(resp => {
           if (resp && resp.data.code === 200) {
@@ -128,7 +128,7 @@
           }
         })
       },
-      loadBorrowHistoryAccordingDate () {
+      loadBorrowHistoryAccordingDate () { // 按照时间加载借阅历史
         var _this = this
         this.$axios.post('/admin/borrow_history_all_accordingDate', {
           date: this.date
@@ -138,7 +138,7 @@
           }
         })
       },
-      loadBorrowHistoryAccordingUsername () {
+      loadBorrowHistoryAccordingUsername () { // 按照用户名加载借阅历史
         var _this = this
         this.$axios.post('/admin/borrow_history_all_accordingUsername', {
           username: this.username
@@ -148,7 +148,7 @@
           }
         })
       },
-      loadBorrowHistoryAccordingDateAndUsername () {
+      loadBorrowHistoryAccordingDateAndUsername () { // 根据日期和用户名加载借阅历史
         if (this.user === '' && this.date === null) {
           this.loadBorrowHistory()
         } else if (this.user !== '' && this.date === null) {

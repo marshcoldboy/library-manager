@@ -87,7 +87,7 @@
         // 将数据放在当前组件的数据内
         this.book = routerParams
       },
-      borrow (book) {
+      borrow (book) { // 借阅图书
         // var _this = this
         this.$axios.post('/BookBorrow', {
           bid: this.book.bid,

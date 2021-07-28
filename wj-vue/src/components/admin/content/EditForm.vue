@@ -7,26 +7,26 @@
       @close="clear">
       <el-form v-model="form" style="text-align: left" ref="dataForm">
         <el-form-item label="书名" :label-width="formLabelWidth" prop="title">
-          <el-input v-model="form.title" autocomplete="off" placeholder="不加《》" ></el-input>
+          <el-input style="width: 520px" v-model="form.title" autocomplete="off" placeholder="不加《》" ></el-input>
         </el-form-item>
         <el-form-item label="作者" :label-width="formLabelWidth" prop="author">
-          <el-input v-model="form.author" autocomplete="off"></el-input>
+          <el-input style="width: 520px" v-model="form.author" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="出版社" :label-width="formLabelWidth" prop="press">
-          <el-input v-model="form.press" autocomplete="off"></el-input>
+          <el-input style="width: 520px" v-model="form.press" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="ISBN" :label-width="formLabelWidth" prop="ISBN">
-          <el-input v-model="form.isbn" autocomplete="off"></el-input>
+          <el-input style="width: 520px" v-model="form.isbn" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="封面" :label-width="formLabelWidth" prop="cover">
-          <el-input v-model="form.cover" autocomplete="off" placeholder="图片 URL"></el-input>
+          <el-input style="width: 520px" v-model="form.cover" autocomplete="off" placeholder="图片 URL"></el-input>
           <img-upload @onUpload="uploadImg" ref="imgUpload"></img-upload>
         </el-form-item>
         <el-form-item label="简介" :label-width="formLabelWidth" prop="abs">
-          <el-input type="textarea" v-model="form.abs" autocomplete="off"></el-input>
+          <el-input style="width: 520px" type="textarea" v-model="form.abs" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="价格" :label-width="formLabelWidth" prop="abs">
-          <el-input type="textarea" v-model="form.price" autocomplete="off"></el-input>
+          <el-input style="width: 520px" v-model="form.price" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="分类" :label-width="formLabelWidth" prop="cid">
         <el-select v-model="form.category.cid" placeholder="请选择分类"  >
@@ -77,7 +77,7 @@
       }
     },
     methods: {
-      clear () {
+      clear () { // 清空添加图书
         this.$refs.imgUpload.clear()
         this.form = {
           bid: '',
@@ -94,7 +94,7 @@
           }
         }
       },
-      onSubmit () {
+      onSubmit () { // 添加图书
         this.$axios
           .post('/admin/content/books', {
             bid: this.form.bid,
@@ -114,7 +114,7 @@
             }
         })
       },
-      uploadImg () {
+      uploadImg () { // 上传图书封面
         this.form.cover = this.$refs.imgUpload.url
       }
     }

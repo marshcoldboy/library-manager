@@ -103,7 +103,7 @@
       }
     },
     methods: {
-      deleteBook (item) {
+      deleteBook (item) { // 删除图书按钮
         this.$confirm('此操作将永久删除该书籍, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -123,7 +123,7 @@
           })
         })
       },
-      editBook (item) {
+      editBook (item) { // 添加图书按钮
         this.$refs.edit.dialogFormVisible = true
         this.$refs.edit.form = {
           bid: item.bid,
@@ -151,7 +151,7 @@
           }
         })
       },
-      deleteSelectedBooks () {
+      deleteSelectedBooks () { // 多选删除图书
         var _this = this
         this.$confirm('此操作将永久删除所选书籍, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -172,7 +172,7 @@
           })
         })
       },
-      cancelSelection (rows) {
+      cancelSelection (rows) { // 取消删除
           this.$refs.checkBoxTable.clearSelection()
       },
       handleSelectionChange (val) {

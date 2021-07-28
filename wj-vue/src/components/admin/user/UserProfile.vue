@@ -140,7 +140,7 @@
         }
       },
       methods: {
-        listUsers () {
+        listUsers () { // 显示所有用户信息
           var _this = this
           this.$axios.get('/admin/user').then(resp => {
             if (resp && resp.data.code === 200) {
@@ -148,7 +148,7 @@
             }
           })
         },
-        listRoles () {
+        listRoles () { // 显示所有角色信息
           var _this = this
           this.$axios.get('/admin/role').then(resp => {
             if (resp && resp.data.code === 200) {
@@ -203,7 +203,7 @@
             }
           })
         },
-        editUser (user) {
+        editUser (user) { // 添加用户
           this.dialogFormVisible = true
           this.selectedUser = user
           let roleIds = []
@@ -212,7 +212,7 @@
           }
           this.selectedRolesIds = roleIds
         },
-        deleteUser (user) {
+        deleteUser (user) { // 删除用户
           this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -232,7 +232,7 @@
             })
           })
         },
-        resetPassword (username) {
+        resetPassword (username) { // 重置用户密码
           this.$axios.put('/admin/user/password', {
             username: username
           }).then(resp => {
