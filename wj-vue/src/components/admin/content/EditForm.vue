@@ -59,7 +59,7 @@
       return {
         dialogFormVisible: false,
         form: {
-          id: '',
+          bid: '',
           title: '',
           author: '',
           press: '',
@@ -80,7 +80,7 @@
       clear () {
         this.$refs.imgUpload.clear()
         this.form = {
-          id: '',
+          bid: '',
           title: '',
           author: '',
           date: '',
@@ -97,7 +97,7 @@
       onSubmit () {
         this.$axios
           .post('/admin/content/books', {
-            id: this.form.id,
+            bid: this.form.bid,
             cover: this.form.cover,
             title: this.form.title,
             author: this.form.author,
