@@ -31,7 +31,12 @@
         </el-table-column>
         <el-table-column
           prop="title"
-          label="书名（展开查看摘要）"
+          label="书名"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="isbn"
+          label="ISBN"
           fit>
         </el-table-column>
         <el-table-column
@@ -47,6 +52,16 @@
         <el-table-column
           prop="press"
           label="出版社"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="price"
+          label="价格"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="amount"
+          label="数量"
           fit>
         </el-table-column>
         <!--<el-table-column-->
@@ -134,6 +149,7 @@
           price: item.price,
           press: item.press,
           abs: item.abs,
+          amount: item.amount,
           category: {
             cid: item.category.cid.toString(),
             name: item.category.name

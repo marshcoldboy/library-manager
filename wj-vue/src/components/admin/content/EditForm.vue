@@ -25,8 +25,11 @@
         <el-form-item label="简介" :label-width="formLabelWidth" prop="abs">
           <el-input style="width: 520px" type="textarea" v-model="form.abs" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="价格" :label-width="formLabelWidth" prop="abs">
+        <el-form-item label="价格" :label-width="formLabelWidth" prop="price">
           <el-input style="width: 520px" v-model="form.price" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="数量" :label-width="formLabelWidth" prop="amount">
+          <el-input style="width: 520px" v-model="form.amount" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="分类" :label-width="formLabelWidth" prop="cid">
         <el-select v-model="form.category.cid" placeholder="请选择分类"  >
@@ -68,6 +71,7 @@
           barcode: '',
           abs: '',
           price: '',
+          amount: '',
           category: {
             cid: '',
             name: ''
@@ -88,6 +92,8 @@
           isbn: '',
           cover: '',
           abs: '',
+          price: '',
+          amount: '',
           category: {
             cid: '',
             name: ''
@@ -106,6 +112,7 @@
             isbn: this.form.isbn,
             abs: this.form.abs,
             price: this.form.price,
+            amount: this.form.amount,
             category: this.form.category
           }).then(resp => {
             if (resp && resp.data.code === 200) {
