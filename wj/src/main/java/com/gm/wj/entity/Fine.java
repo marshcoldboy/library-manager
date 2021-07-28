@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -18,19 +19,24 @@ public class Fine {
     @Column(name = "fid")
     private int fid;
 
+    /*罚款用户名*/
     @Column(name = "username")
     private String username;
 
+    /*外键 指向BookBorrow表的主键*/
     @OneToOne
     @JoinColumn(name = "borrowid")
     private BookBorrow bookborrow;
 
+    /*罚款数额*/
     @Column(name = "fine")
     private double fine;
 
+    /*逾期归还天数*/
     @Column(name = "days")
     private int days;
 
+    /*罚款缴纳状态*/
     @Transient
     private String status;
 

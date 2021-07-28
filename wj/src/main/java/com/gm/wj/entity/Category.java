@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 import javax.persistence.Column;
@@ -13,12 +14,6 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
-/**
- * Category entity.
- *
- * @author Evan
- * @date 2019/4
- */
 @Data
 @Entity
 @Table(name = "category")
@@ -30,8 +25,6 @@ public class Category{
     @Column(name = "cid")
     private int cid;
 
-    /**
-     * Category name in Chinese.
-     */
+    /*分类中文名*/
     private String name;
 }

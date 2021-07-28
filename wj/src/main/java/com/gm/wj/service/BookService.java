@@ -27,51 +27,16 @@ public class BookService {
     private RedisService redisService;
 
     public List<Book> list() {
-//        List<Book> books;
-//        String key = "booklist";
-//        Object bookCache = redisService.get(key);
-//
-//        if (bookCache == null) {
-//            Sort sort = new Sort(Sort.Direction.DESC, "id");
-//            books = bookDAO.findAll(sort);
-//            redisService.set(key, books);
-//        } else {
-//            books = CastUtils.objectConvertToList(bookCache, Book.class);
-//        }
-//        return books;
         Sort sort = new Sort(Sort.Direction.DESC, "bid");
         return bookDAO.findAll(sort);
     }
 
-//    直接用注解实现缓存
-//    @Cacheable(value = RedisConfig.REDIS_KEY_DATABASE)
-//    public List<Book> list() {
-//        List<Book> books;
-//        Sort sort = new Sort(Sort.Direction.DESC, "id");
-//        books = bookDAO.findAll(sort);
-//        return books;
-//    }
-
     public void addOrUpdate(Book book) {
-//        redisService.delete("booklist");
         bookDAO.saveAndFlush(book);
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        redisService.delete("booklist");
     }
 
     public void deleteByBid(int bid) {
-//        redisService.delete("booklist");
         bookDAO.deleteByBid(bid);
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        redisService.delete("booklist");
     }
 
     public List<Book> listByCategory(int cid) {

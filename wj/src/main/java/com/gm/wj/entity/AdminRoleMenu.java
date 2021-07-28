@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 
@@ -7,12 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-/**
- * Relations between roles and menus.
- *
- * @author Evan
- * @date 2019/11
- */
 @Data
 @Entity
 @Table(name = "admin_role_menu")
@@ -24,13 +19,9 @@ public class AdminRoleMenu {
     @Column(name = "id")
     private int id;
 
-    /**
-     * Role id.
-     */
+    /*角色id*/
     private int rid;
 
-    /**
-     * Menu id.
-     */
+    /*菜单id*/
     private int mid;
 }

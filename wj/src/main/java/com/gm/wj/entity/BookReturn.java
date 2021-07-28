@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,16 +20,20 @@ public class BookReturn {
     @Column(name = "returnid")
     private int returnid;
 
+    /*外键 指向BookBorrow表的主键*/
     @OneToOne
     @JoinColumn(name = "borrowid")
     private BookBorrow bookborrow;
 
+    /*书籍归还日期*/
     @Column(name = "returndate")
     private Date returndate;
 
+    /*归还请求被拒绝标记*/
     @Column(name = "deny")
     private Boolean deny;
 
+    /*罚款数额*/
     @Column(name = "fine")
     private double fine;
 

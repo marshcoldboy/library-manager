@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,12 +9,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-/**
- * User entity.
- *
- * @author Evan
- * @date 2019/4
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,48 +24,33 @@ public class User {
     @Column(name = "uid")
     private int uid;
 
-    /**
-     * Username.
-     */
+    /*用户名*/
     @NotEmpty(message = "用户名不能为空")
     private String username;
 
-    /**
-     * Password.
-     */
+    /*密码（加密储存在数据库中）*/
     private String password;
 
-    /**
-     * Salt for encoding.
-     */
+    /*盐粒*/
     private String salt;
 
-    /**
-     * Real name.
-     */
+    /*用户真实姓名*/
     private String name;
 
-    /**
-     * Phone number.
-     */
+    /*用户电话*/
     private String phone;
 
-    /**
-     * Email address.
-     *
-     * A Email address can be null,but should be correct if exists.
-     */
+    /*用户邮箱*/
     @Email(message = "请输入正确的邮箱")
     private String email;
 
-    /**
-     * User status.
-     */
+    /*用户封号状态*/
     private boolean enabled;
 
     /**
      * Transient property for storing role owned by current user.
      */
+    /*用户拥有权限角色列表*/
     @Transient
     private List<AdminRole> roles;
 

@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -6,12 +7,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-/**
- * Book entity.
- *
- * @author Evan
- * @date 2019/4
- */
 @Data
 @Entity
 @Table(name = "book")
@@ -23,49 +18,41 @@ public class Book {
     @Column(name = "bid")
     private int bid;
 
-    /**
-     * Title of the book.
-     */
+    /*书名*/
     private String title;
 
-    /**
-     * Author name.
-     */
+    /*作者*/
     private String author;
 
-    /**
-     * Press.
-     */
+    /*出版商*/
     private String press;
 
+    /*ISBN*/
     @Column(name="ISBN")
     private String isbn;
 
+    /*价格*/
     @Column(name = "price")
     private double price;
 
-    /**
-     * Abstract of the book.
-     */
+    /*图书简介*/
     @Column(name = "abs")
     private String abs;
 
-    /**
-     * The url of the book's cover.
-     */
+    /*书籍封面图片url*/
     @Column(name = "cover")
     private String cover;
 
+    /*图书数量*/
     @Column(name = "amount")
     private int amount;
 
-    /**
-     * Category id.
-     */
+    /*书籍类别*/
     @ManyToOne
     @JoinColumn(name="cid")
     private Category category;
 
+    /*记录多本书主键*/
     @Transient
     private int[] bids;
 }

@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -6,12 +7,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-/**
- * Permission entity.
- *
- * @author Evan
- * @date 2019/11
- */
 @Data
 @Entity
 @Table(name = "admin_permission")
@@ -23,18 +18,12 @@ public class AdminPermission {
     @Column(name = "id")
     private int id;
 
-    /**
-     * Permission name;
-     */
+//    许可证名
     private String name;
 
-    /**
-     * Permission's description(in Chinese)
-     */
+//    许可证描述
     private String desc_;
 
-    /**
-     * The path which triggers permission check.
-     */
+//    许可证检查路径许可证检查路径
     private String url;
 }

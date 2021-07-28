@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -7,12 +8,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Menu entity
- *
- * @author Evan
- * @date 2019/11
- */
 @Data
 @Entity
 @Table(name = "admin_menu")
@@ -24,39 +19,25 @@ public class AdminMenu {
     @Column(name = "id")
     private int id;
 
-    /**
-     * Menu access path.
-     */
+    //打开菜单的路径
     private String path;
 
-    /**
-     * Menu name.
-     */
+    //菜单名字
     private String name;
 
-    /**
-     * Menu name in Chinese.
-     */
+    //菜单中文名
     private String nameZh;
 
-    /**
-     * Menu icon class(use element-ui icons).
-     */
+    //菜单所用图标
     private String iconCls;
 
-    /**
-     * Front-end component name corresponding to menu.
-     */
+    //对应前端组件
     private String component;
 
-    /**
-     * Parent menu.
-     */
+    //父菜单
     private int parentId;
 
-    /**
-     * Transient property for storing children menus.
-     */
+    //子菜单（不在数据库中记录）
     @Transient
     private List<AdminMenu> children;
 }

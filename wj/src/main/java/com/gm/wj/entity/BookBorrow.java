@@ -1,3 +1,4 @@
+/** @author SYJ  */
 package com.gm.wj.entity;
 
 
@@ -14,102 +15,37 @@ import java.sql.Date;
 @JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
 @ToString
 public class BookBorrow {
+
     @Id
     @Column(name = "borrowid")
     int borrowid;
 
+    /*借阅者名字*/
     @Column(name="username")
     String username;
 
+    /*借阅书籍名字*/
     @Column(name="title")
     String title;
 
+    /*书籍开始借阅日期*/
     @Column(name="startdate")
     Date startdate;
 
+    /*书籍规定归还日期*/
     @Column(name="enddate")
     Date enddate;
 
+    /*书籍实际归还日求*/
     @Column(name="returndate")
     Date returndate;
 
+    /*剩余归还天数*/
     @Transient
     int days;
 
+    /*书籍借阅状态*/
     @Column(name = "status")
     String status;
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getDays() {
-        return days;
-    }
-
-    public void setDays(int days) {
-        this.days = days;
-    }
-
-    public BookBorrow(String username, String title, Date startdate, Date enddate, String status) {
-        this.username = username;
-        this.title = title;
-        this.startdate = startdate;
-        this.enddate = enddate;
-    }
-
-    public BookBorrow() {
-    }
-
-    public int getBorrowid() {
-        return borrowid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setBorrowid(int id) {
-        this.borrowid = id;
-    }
-
-    public Date getStartdate() {
-        return startdate;
-    }
-
-    public void setStartdate(Date startDate) {
-        this.startdate = startDate;
-    }
-
-    public Date getEnddate() {
-        return enddate;
-    }
-
-    public void setEnddate(Date endDate) {
-        this.enddate = endDate;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String uid) {
-        this.username = uid;
-    }
-
-    public Date getReturndate() {
-        return returndate;
-    }
-
-    public void setReturndate(Date returndate) {
-        this.returndate = returndate;
-    }
 }
