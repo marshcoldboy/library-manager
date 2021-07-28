@@ -9,5 +9,4 @@ import com.gm.wj.entity.Category;
  * @date 2019/4
  */
 public interface CategoryDAO extends JpaRepository<Category, Integer> {
-
 }

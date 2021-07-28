@@ -5,12 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-/**
- * @author Evan
- * @date 2019/11
- */
 public interface AdminRoleMenuDAO extends JpaRepository<AdminRoleMenu,Integer> {
-    List<AdminRoleMenu> findAllByRid(int rid);
-    List<AdminRoleMenu> findAllByRid(List<Integer> rids);
-    void deleteAllByRid(int rid);
+    List<AdminRoleMenu> findAllByRid(int rid);/*根据角色主键查询所有记录*/
+    List<AdminRoleMenu> findAllByRid(List<Integer> rids);/*根据角色主键列表查询对应拥有对应rid的所有记录*/
+    void deleteAllByRid(int rid);/*根据角色主键删除所有对应记录*/
 }

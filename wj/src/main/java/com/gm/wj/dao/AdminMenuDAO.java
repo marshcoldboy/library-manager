@@ -5,12 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-/**
- * @author Evan
- * @date 2020/1/10
- */
+
 public interface AdminMenuDAO extends JpaRepository<AdminMenu, Integer> {
-     AdminMenu findById(int id);
-     List<AdminMenu> findAllByParentId(int parentId);
+     AdminMenu findById(int id);/*根据主键查询记录*/
+     List<AdminMenu> findAllByParentId(int parentId);/*根据父菜单主键查询所有菜单*/
 }
 

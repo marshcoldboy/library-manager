@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2019/4
  */
 public interface UserDAO extends JpaRepository<User,Integer> {
-    User findByUsername(String username);
-
-    void deleteByUsername(String username);
-
-    User getByUsernameAndPassword(String username,String password);
+    User findByUsername(String username);/*根据用户名查询对应记录*/
+    void deleteByUsername(String username);/*根据用户名删除对应记录*/
+    User getByUsernameAndPassword(String username,String password);/*根据用户名和密码查询对应记录*/
 }

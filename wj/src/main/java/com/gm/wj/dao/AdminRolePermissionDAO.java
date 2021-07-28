@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2019/11
  */
 public interface AdminRolePermissionDAO extends JpaRepository<AdminRolePermission, Integer> {
-    List<AdminRolePermission> findAllByRid(int rid);
-    List<AdminRolePermission> findAllByRid(List<Integer> rids);
-    void deleteAllByRid(int rid);
+    List<AdminRolePermission> findAllByRid(int rid);/*根据rid查询所有所有对应记录*/
+    List<AdminRolePermission> findAllByRid(List<Integer> rids);/*根据所有rid查询对应的记录*/
+    void deleteAllByRid(int rid);/*根据rid删除对应记录*/
 }
