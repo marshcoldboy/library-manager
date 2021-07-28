@@ -82,4 +82,24 @@ public class BookService {
     public List<Book> Search(String keywords) {
         return bookDAO.findAllByTitleLikeOrAuthorLikeOrPressLikeOrIsbnLike('%' + keywords + '%', '%' + keywords + '%', '%' + keywords + '%', '%' + keywords + '%');
     }
+
+    public Book findByTitle(String title){
+        return bookDAO.findByTitle(title);
+    }
+
+    public Boolean borrowJudge(String title){
+        Book book=this.findByTitle(title);
+        int amount=book.getAmount();
+        if(amount==0)
+            return false;
+        else{
+            book.setAmount(--amount);
+            bookDAO.saveAndFlush(book);
+            return true;
+        }
+    }
+
+    public void saveAnfFlush(Book book){
+        bookDAO.saveAndFlush(book);
+    }
 }

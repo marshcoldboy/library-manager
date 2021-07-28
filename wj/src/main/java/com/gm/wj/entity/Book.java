@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * Book entity.
@@ -43,17 +41,23 @@ public class Book {
     @Column(name="ISBN")
     private String isbn;
 
-    private int price;
+    @Column(name = "price")
+    private double price;
 
     /**
      * Abstract of the book.
      */
+    @Column(name = "abs")
     private String abs;
 
     /**
      * The url of the book's cover.
      */
+    @Column(name = "cover")
     private String cover;
+
+    @Column(name = "amount")
+    private int amount;
 
     /**
      * Category id.

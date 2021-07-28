@@ -392,7 +392,7 @@
             this.loadBookBorrow()
             this.loadBorrowHistory()
           } else {
-            alert('该书籍当前状态不可借阅')
+            alert(successResponse.data.message)
           }
         })
       }

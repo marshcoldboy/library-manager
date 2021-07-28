@@ -62,8 +62,10 @@ public class InformationController {
 
     @PostMapping("/api/userCenter/bookRenew")
     public Result bookRenew(@RequestBody @Valid BookBorrow bookBorrow){
-        System.out.println(bookBorrowService.renewBook(bookBorrow.getBorrowid()));
-        return ResultFactory.buildSuccessResult(null);
+        if(bookBorrowService.renewBook(bookBorrow.getBorrowid()))
+            return ResultFactory.buildSuccessResult(null);
+        else
+            return ResultFactory.buildFailResult("您已续借过，无法继续续借");
     }
 
     @PostMapping("/api/userCenter/fine_information")
@@ -88,7 +90,6 @@ public class InformationController {
 
     @PostMapping("/api/admin/book_return/consent")
     public Result adminConsent(@RequestBody @Valid BookBorrow bookBorrow){
-        System.out.println(bookBorrow);
         return ResultFactory.buildSuccessResult(bookReturnService.adminConsent(bookBorrow.getBorrowid()));
     }
 

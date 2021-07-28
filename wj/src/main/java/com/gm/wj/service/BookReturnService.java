@@ -1,6 +1,7 @@
 package com.gm.wj.service;
 
 import com.gm.wj.dao.BookReturnDAO;
+import com.gm.wj.entity.Book;
 import com.gm.wj.entity.BookBorrow;
 import com.gm.wj.entity.BookReturn;
 import com.gm.wj.entity.Fine;
@@ -20,6 +21,8 @@ public class BookReturnService {
     BookBorrowService bookBorrowService;
     @Autowired
     FineService fineService;
+    @Autowired
+    BookService bookService;
 
     public void save(BookReturn bookReturn){
         bookReturnDAO.saveAndFlush(bookReturn);
@@ -27,6 +30,10 @@ public class BookReturnService {
 
     public String adminConsent(int borrowId){
         BookBorrow bookBorrow=bookBorrowService.findByBorrowid(borrowId);
+
+        Book book=bookService.findByTitle(bookBorrow.getTitle());
+        book.setAmount(book.getAmount()+1);
+        bookService.saveAnfFlush(book);
 
         BookReturn bookReturn=bookReturnDAO.findByBookborrow(bookBorrow);
         bookReturnDAO.delete(bookReturn);

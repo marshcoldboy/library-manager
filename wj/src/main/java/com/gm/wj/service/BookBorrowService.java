@@ -114,14 +114,20 @@ public class BookBorrowService {
         return bookBorrow;
     }
 
-    public BookBorrow renewBook(int borrow_id){
+    public Boolean renewBook(int borrow_id){
         BookBorrow bookBorrow=bookBorrowDAO.findByBorrowid(borrow_id);
+        Date startDate=bookBorrow.getStartdate();
         Date endDate=bookBorrow.getEnddate();
+
+        int days=(int)((endDate.getTime()-startDate.getTime())/(60*24*24*1000));
+        if(days>=14)
+            return false;
+
         calendar.setTime(endDate);
         calendar.add(Calendar.DATE,7);
         endDate=new Date(calendar.getTimeInMillis());
         bookBorrow.setEnddate(endDate);
-        return bookBorrowDAO.saveAndFlush(bookBorrow);
+        return true;
     }
 
     public BookBorrow findByBorrowid(int borrow_id){
