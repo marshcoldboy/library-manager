@@ -98,7 +98,6 @@
       </el-table>
       <div style="margin: 20px 0 20px 0;float: left">
         <el-button @click="cancelSelection()">取消选择</el-button>
-        <el-button @click="deleteSelectedBooks()">批量删除</el-button>
       </div>
     </el-card>
   </div>
