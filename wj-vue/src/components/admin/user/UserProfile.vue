@@ -124,14 +124,14 @@
       name: 'UserProfile',
       components: {BulkRegistration},
       data () {
-          return {
-            users: [],
-            roles: [],
-            dialogFormVisible: false,
-            selectedUser: [],
-            selectedRolesIds: [],
-            multipleSelection: []
-          }
+        return {
+          users: [],
+          roles: [],
+          dialogFormVisible: false,
+          selectedUser: [],
+          selectedRolesIds: [],
+          multipleSelection: []
+        }
       },
       mounted () {
         this.listUsers()
@@ -241,7 +241,7 @@
           }).then(resp => {
             if (resp && resp.data.code === 200) {
               this.$alert('密码已重置为 123')
-          }
+            }
           })
         },
         cancelSelection (rows) { // 取消删除
@@ -250,7 +250,29 @@
         handleSelectionChange (val) {
           this.multipleSelection = []
           val.forEach(item => {
-            this.multipleSelection.push(item.bid)
+            this.multipleSelection.push(item.uid)
+          })
+        },
+        deleteSelectedUsers () { // 多选删除图书
+          var _this = this
+          this.$confirm('此操作将永久删除所选用户, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+              this.$axios
+                .post('/admin/user/deleteSelectedUsers', {uids: _this.multipleSelection}).then(resp => {
+                if (resp && resp.data.code === 200) {
+                  this.listUsers()
+                  this.listRoles()
+                }
+              })
+            }
+          ).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
           })
         }
       }
