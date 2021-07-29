@@ -101,6 +101,7 @@
             alert('该书籍当前状态不可借阅')
           }
         })
+        this.book.amount--
       },
       getUserStatus () {
         if (this.$store.state.username) {

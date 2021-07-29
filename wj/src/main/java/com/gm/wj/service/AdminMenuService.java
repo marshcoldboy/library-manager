@@ -29,10 +29,12 @@ public class AdminMenuService {
     @Autowired
     AdminRoleMenuService adminRoleMenuService;
 
+    /*根据父菜单id查询*/
     public List<AdminMenu> getAllByParentId(int parentId) {
         return adminMenuDAO.findAllByParentId(parentId);
     }
 
+    /*返回当前用户的权限菜单*/
     public List<AdminMenu> getMenusByCurrentUser() {
         // Get current user in DB.
         String username = SecurityUtils.getSubject().getPrincipal().toString();
@@ -52,6 +54,7 @@ public class AdminMenuService {
         return menus;
     }
 
+    /*根据角色返回权限菜单*/
     public List<AdminMenu> getMenusByRoleId(int rid) {
         List<Integer> menuIds = adminRoleMenuService.findAllByRid(rid)
                 .stream().map(AdminRoleMenu::getMid).collect(Collectors.toList());
@@ -61,11 +64,7 @@ public class AdminMenuService {
         return menus;
     }
 
-    /**
-     * Adjust the Structure of the menu.
-     *
-     * @param menus Menu items list without structure
-     */
+    /*根据前端设置的数据修改用户或角色的权限*/
     public void handleMenus(List<AdminMenu> menus) {
         menus.forEach(m -> {
             List<AdminMenu> children = getAllByParentId(m.getId());

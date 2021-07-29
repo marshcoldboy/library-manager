@@ -104,7 +104,7 @@
           borrowid: item.bookborrow.borrowid
         }).then(successResponse => {
           if (successResponse.data.code === 200) {
-            alert('归还成功')
+            alert('确认归还成功')
             this.loadBookReturn()
           } else {
             alert('归还失败')

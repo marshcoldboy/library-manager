@@ -48,4 +48,7 @@ public class BookBorrow {
     @Column(name = "status")
     String status;
 
+    /*是否续借*/
+    @Transient
+    String renew;
 }

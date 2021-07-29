@@ -30,10 +30,8 @@ public class BookBorrowService {
         calendar.setTime(startDate);
         calendar.add(Calendar.DATE,14);
         Date endDate=new Date(calendar.getTimeInMillis());
-//        Date returnDate=new Date(0,0,1);
         bookborrow.setStartdate(startDate);
         bookborrow.setEnddate(endDate);
-//        bookborrow.setReturndate(returnDate);
         bookborrow.setStatus("借阅中");
         bookBorrowDAO.saveAndFlush(bookborrow);
     }
@@ -50,7 +48,6 @@ public class BookBorrowService {
             if(bookBorrow.getReturndate()==null) {
                 int days=(int) ((bookBorrow.getEnddate().getTime() - date.getTime()) / (24 * 60 * 60 * 1000));
                 bookBorrow.setDays(Math.max(days, 0));
-//                bookBorrow.setStatus("借阅中");
                 result.add(bookBorrow);
             }
         }
@@ -63,7 +60,7 @@ public class BookBorrowService {
         for (BookBorrow bookBorrow:bookBorrowList) {
             if(bookBorrow.getReturndate()==null) {
                 int days=(int) ((bookBorrow.getEnddate().getTime() - bookBorrow.getStartdate().getTime()) / (24 * 60 * 60 * 1000));
-                bookBorrow.setStatus(days>14?"是":"否");
+                bookBorrow.setRenew(days>14?"是":"否");
                 result.add(bookBorrow);
             }
         }
@@ -75,12 +72,6 @@ public class BookBorrowService {
         List<BookBorrow> result=new ArrayList<BookBorrow>();
         for (BookBorrow bookBorrow:bookBorrowList) {
             if(bookBorrow.getReturndate()!=null) {
-//                long time=bookBorrow.getReturndate().getTime()-bookBorrow.getEnddate().getTime();
-//                if (time <= 0) {
-//                    bookBorrow.setStatus("按时归还");
-//                } else {
-//                    bookBorrow.setStatus("逾期归还");
-//                }
                 result.add(bookBorrow);
             }
         }
@@ -92,8 +83,6 @@ public class BookBorrowService {
         List<BookBorrow> result=new ArrayList<BookBorrow>();
         for (BookBorrow bookBorrow:bookBorrowList) {
             if(bookBorrow.getReturndate()!=null) {
-//                long time=bookBorrow.getReturndate().getTime()-bookBorrow.getEnddate().getTime();
-//                bookBorrow.setStatus(time<=0?"按时归还":"逾期归还");
                 result.add(bookBorrow);
             }
         }
@@ -119,8 +108,8 @@ public class BookBorrowService {
         Date startDate=bookBorrow.getStartdate();
         Date endDate=bookBorrow.getEnddate();
 
-        int days=(int)((endDate.getTime()-startDate.getTime())/(60*24*24*1000));
-        if(days>=14)
+        int days=(int)((endDate.getTime()-startDate.getTime())/(24*60*60*1000));
+        if(days>14)
             return false;
 
         calendar.setTime(endDate);

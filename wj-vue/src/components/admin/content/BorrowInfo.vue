@@ -39,7 +39,7 @@
             width="250">
           </el-table-column>
           <el-table-column
-            prop="status"
+            prop="renew"
             label="是否续借"
             width="150">
           </el-table-column>

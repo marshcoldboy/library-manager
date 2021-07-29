@@ -31,6 +31,7 @@ public class AdminPermissionService {
     @Autowired
     UserService userService;
 
+    /*返回所有许可证列表*/
     public List<AdminPermission> list() {return adminPermissionDAO.findAll();}
 
     /**
