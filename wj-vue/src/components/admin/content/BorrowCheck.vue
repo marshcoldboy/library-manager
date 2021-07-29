@@ -12,7 +12,7 @@
         <side-menu class="fixed" id="side-menu"></side-menu>
         <p style="margin-right: 1000px;margin-top: -30px">
           <span><i class="el-icon-s-fold"></i></span>
-          <span style="font-size: 20px">借阅确认</span>
+          <span style="font-size: 20px">归还确认</span>
         </p>
         <el-table
           :data="bookReturn"

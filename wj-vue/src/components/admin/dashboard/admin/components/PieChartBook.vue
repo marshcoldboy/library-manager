@@ -62,12 +62,12 @@ export default {
             radius: [10, 50],
             center: ['50%', '50%'],
             data: [
-              { value: 320, name: '文学' },
-              { value: 240, name: '流行' },
-              { value: 149, name: '文化' },
-              { value: 100, name: '生活' },
-              { value: 59, name: '经管' },
-              {value: 78, name: '科技'}
+              { value: 7, name: '文学' },
+              { value: 7, name: '流行' },
+              { value: 6, name: '文化' },
+              { value: 5, name: '生活' },
+              { value: 0, name: '经管' },
+              {value: 4, name: '科技'}
             ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600

@@ -27,7 +27,6 @@
               <a href="">{{item.title}}</a>
             </div>
           </div>
-          <div class="author">{{item.author}}</div>
         </el-card>
       </el-tooltip>
     </el-row>
@@ -108,7 +107,7 @@
 
   .title {
     font-size: 14px;
-    text-align: left;
+    text-align: center;
   }
 
   .author {
