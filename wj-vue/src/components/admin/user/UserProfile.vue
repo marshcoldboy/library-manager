@@ -44,6 +44,8 @@
         stripe
         :default-sort = "{prop: 'uid', order: 'ascending'}"
         style="width: 100%"
+        ref="checkBoxTable"
+        @selection-change="handleSelectionChange"
         :max-height="tableHeight">
         <el-table-column
           type="selection"
@@ -109,8 +111,8 @@
         </el-table-column>
       </el-table>
       <div style="margin: 20px 0 20px 0;float: left">
-        <el-button>取消选择</el-button>
-        <el-button>批量删除</el-button>
+        <el-button @click="cancelSelection()">取消选择</el-button>
+        <el-button @click="deleteSelectedBooks()">批量删除</el-button>
       </div>
     </el-card>
   </div>
@@ -122,13 +124,14 @@
       name: 'UserProfile',
       components: {BulkRegistration},
       data () {
-          return {
-            users: [],
-            roles: [],
-            dialogFormVisible: false,
-            selectedUser: [],
-            selectedRolesIds: []
-          }
+        return {
+          users: [],
+          roles: [],
+          dialogFormVisible: false,
+          selectedUser: [],
+          selectedRolesIds: [],
+          multipleSelection: []
+        }
       },
       mounted () {
         this.listUsers()
@@ -238,7 +241,38 @@
           }).then(resp => {
             if (resp && resp.data.code === 200) {
               this.$alert('密码已重置为 123')
-          }
+            }
+          })
+        },
+        cancelSelection (rows) { // 取消删除
+          this.$refs.checkBoxTable.clearSelection()
+        },
+        handleSelectionChange (val) {
+          this.multipleSelection = []
+          val.forEach(item => {
+            this.multipleSelection.push(item.uid)
+          })
+        },
+        deleteSelectedUsers () { // 多选删除图书
+          var _this = this
+          this.$confirm('此操作将永久删除所选用户, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+              this.$axios
+                .post('/admin/user/deleteSelectedUsers', {uids: _this.multipleSelection}).then(resp => {
+                if (resp && resp.data.code === 200) {
+                  this.listUsers()
+                  this.listRoles()
+                }
+              })
+            }
+          ).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
           })
         }
       }

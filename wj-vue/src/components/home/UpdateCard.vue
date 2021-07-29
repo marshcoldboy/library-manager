@@ -1,14 +1,18 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-      <span style="font-weight: bold;font-size: 20px">最近更新</span>
+      <span style="font-weight: bold;font-size: 20px">最近公告</span>
     </div>
     <div class="block">
       <el-timeline>
-        <el-timeline-item id="time" timestamp="2021/7/21" placement="top" color="snow">
+        <el-timeline-item id="time" timestamp="2021/7/29" placement="top" color="snow">
           <el-card class="card-in">
-            <h4>实现第一部分基本功能</h4>
-            <p>42 提交于 2021/7/21 15:50</p>
+            <h4>从2021/7/1开始，超期归还图书将缴纳罚款</h4>
+            <p>提交于 2021/6/30 15:50</p>
+          </el-card>
+          <el-card class="card-in">
+            <h4>新书到库：程序员修炼之道、深入理解计算机系统</h4>
+            <p>提交于 2021/7/29 15:32</p>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -26,7 +30,6 @@
   .box-card {
     margin-top: 5px;
     width: 988px;
-    height: 300px;
     text-align: left;
     background: rgba(0,0,0,0.3);
   }

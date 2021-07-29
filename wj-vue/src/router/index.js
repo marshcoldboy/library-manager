@@ -34,14 +34,6 @@ export default new Router({
           }
         },
         {
-          path: '/admin/content/editor',
-          name: 'Editor',
-          component: () => import('../components/admin/content/ArticleEditor'),
-          meta: {
-            requireAuth: true
-          }
-        },
-        {
           path: '/library',
           name: 'Library',
           component: () => import('../components/library/LibraryIndex')
@@ -119,14 +111,6 @@ export const createRouter = routes => new Router({
           path: '/userCenter',
           name: 'userCenter',
           component: () => import('../components/userCenter/UserCenterIndex'),
-          meta: {
-            requireAuth: true
-          }
-        },
-        {
-          path: '/admin/content/editor',
-          name: 'Editor',
-          component: () => import('../components/admin/content/ArticleEditor'),
           meta: {
             requireAuth: true
           }

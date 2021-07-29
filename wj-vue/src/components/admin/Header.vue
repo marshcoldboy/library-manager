@@ -1,9 +1,8 @@
 <template>
   <el-card class="admin-header">
     <a href="/index">
-      <img src="../../assets/img/icon/cow.png" alt="" width="55px" style="float: left;margin-top: -5px;">
+      <img src="../../assets/img/icon/return.png" alt="" width="250px" style="float: left;margin-top: -20px;margin-left: -20px">
     </a>
-    <span style="font-size: 32px;font-weight: bold;position:absolute;left: 100px">返  回</span>
     <i class="el-icon-switch-button" v-on:click="logout" style="font-size: 40px;float: right"></i>
   </el-card>
 </template>
