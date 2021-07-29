@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * @author Evan
- * @date 2019/4
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 public interface BookDAO extends JpaRepository<Book,Integer> {
     List<Book> findAllByCategory(Category category);/*根据书籍种类查询所有对应记录*/

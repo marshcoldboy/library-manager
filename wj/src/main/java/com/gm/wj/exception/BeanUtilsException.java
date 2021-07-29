@@ -1,9 +1,8 @@
 package com.gm.wj.exception;
 
 /**
- * BeanUtils exception.
- *
- * @author johnniang
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 public class BeanUtilsException extends RuntimeException {
 

@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * @author Evan
- * @date 2019/11
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 public interface AdminRolePermissionDAO extends JpaRepository<AdminRolePermission, Integer> {
     List<AdminRolePermission> findAllByRid(int rid);/*根据rid查询所有所有对应记录*/

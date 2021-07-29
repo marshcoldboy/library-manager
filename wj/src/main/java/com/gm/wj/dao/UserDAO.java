@@ -4,8 +4,8 @@ import com.gm.wj.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * @author Evan
- * @date 2019/4
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 public interface UserDAO extends JpaRepository<User,Integer> {
     User findByUsername(String username);/*根据用户名查询对应记录*/

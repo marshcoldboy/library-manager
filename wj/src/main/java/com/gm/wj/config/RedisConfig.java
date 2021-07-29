@@ -20,8 +20,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 /**
- * @author Evan
- * @date 2020/4/23 21:51
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 @EnableCaching
 @Configuration
