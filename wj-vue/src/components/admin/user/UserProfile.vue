@@ -44,6 +44,8 @@
         stripe
         :default-sort = "{prop: 'uid', order: 'ascending'}"
         style="width: 100%"
+        ref="checkBoxTable"
+        @selection-change="handleSelectionChange"
         :max-height="tableHeight">
         <el-table-column
           type="selection"
@@ -109,8 +111,8 @@
         </el-table-column>
       </el-table>
       <div style="margin: 20px 0 20px 0;float: left">
-        <el-button>取消选择</el-button>
-        <el-button>批量删除</el-button>
+        <el-button @click="cancelSelection()">取消选择</el-button>
+        <el-button @click="deleteSelectedBooks()">批量删除</el-button>
       </div>
     </el-card>
   </div>
@@ -127,7 +129,8 @@
             roles: [],
             dialogFormVisible: false,
             selectedUser: [],
-            selectedRolesIds: []
+            selectedRolesIds: [],
+            multipleSelection: []
           }
       },
       mounted () {
@@ -239,6 +242,15 @@
             if (resp && resp.data.code === 200) {
               this.$alert('密码已重置为 123')
           }
+          })
+        },
+        cancelSelection (rows) { // 取消删除
+          this.$refs.checkBoxTable.clearSelection()
+        },
+        handleSelectionChange (val) {
+          this.multipleSelection = []
+          val.forEach(item => {
+            this.multipleSelection.push(item.bid)
           })
         }
       }
