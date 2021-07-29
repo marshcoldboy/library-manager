@@ -16,8 +16,8 @@ import org.springframework.util.ObjectUtils;
 import java.util.Set;
 
 /**
- * @author Evan
- * @date 2019/10
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 public class WJRealm extends AuthorizingRealm {
 

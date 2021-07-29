@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Evan
- * @date 2019/4
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 @Component
 public class ErrorConfig implements ErrorPageRegistrar {
