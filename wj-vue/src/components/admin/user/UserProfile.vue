@@ -263,7 +263,8 @@
               this.$axios
                 .post('/admin/user/deleteSelectedUsers', {uids: _this.multipleSelection}).then(resp => {
                 if (resp && resp.data.code === 200) {
-                  this.loadBooks()
+                  this.listUsers()
+                  this.listRoles()
                 }
               })
             }
