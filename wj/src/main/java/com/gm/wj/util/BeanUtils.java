@@ -13,10 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Bean utilities (copied from halo-master).
- *
- * @author johnniang
- * @date 2020/4/2 19:52
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 public class BeanUtils {
 

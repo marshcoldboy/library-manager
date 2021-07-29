@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Evan
- * @date 2020/5/31 19:04
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 public class CastUtils {
     public static <T> List<T> objectConvertToList(Object obj, Class<T> clazz) {

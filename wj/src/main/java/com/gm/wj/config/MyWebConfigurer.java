@@ -4,8 +4,8 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.web.servlet.config.annotation.*;
 
 /**
- * @author Evan
- * @date 2019/4
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 @SpringBootConfiguration
 public class MyWebConfigurer implements WebMvcConfigurer {

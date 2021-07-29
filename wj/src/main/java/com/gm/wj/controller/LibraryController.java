@@ -17,10 +17,8 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Library controller.
- *
- * @author Evan
- * @date 2019/4
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 @RestController
 public class LibraryController {
@@ -34,6 +32,7 @@ public class LibraryController {
     CategoryService categoryService;
     private @Valid Object bookBorrow;
 
+    /*增加借阅信息*/
     @PostMapping("/api/BookBorrow")
     public Result subscribe(@RequestBody @Valid BookBorrow bookBorrow){
         if(!bookService.borrowJudge(bookBorrow.getTitle()))
@@ -44,11 +43,13 @@ public class LibraryController {
         }
     }
 
+    /*返回所有书籍信息*/
     @GetMapping("/api/books")
     public Result listBooks() {
         return ResultFactory.buildSuccessResult(bookService.list());
     }
 
+    /*管理员增加或修改图书*/
     @PostMapping("/api/admin/content/books")
     public Result addOrUpdateBooks(@RequestBody @Valid Book book) {
         Category category=categoryService.get(book.getCategory().getCid());
@@ -57,12 +58,14 @@ public class LibraryController {
         return ResultFactory.buildSuccessResult("修改成功");
     }
 
+    /*管理员删除图书*/
     @PostMapping("/api/admin/content/books/delete")
     public Result deleteBook(@RequestBody @Valid Book book) {
         bookService.deleteByBid(book.getBid());
         return ResultFactory.buildSuccessResult("删除成功");
     }
 
+    /*管理员删除所有选中图书*/
     @PostMapping("/api/admin/content/books/deleteSelectedBooks")
     public Result deleteAllBook(@RequestBody @Valid Book books){
         int[] bids=books.getBids();
@@ -72,6 +75,7 @@ public class LibraryController {
         return ResultFactory.buildSuccessResult("删除成功");
     }
 
+    /*根据关键词查询图书*/
     @GetMapping("/api/search")
     public Result searchResult(@RequestParam("keywords") String keywords) {
         if ("".equals(keywords)) {
@@ -81,16 +85,19 @@ public class LibraryController {
         }
     }
 
+    /*根据日期和用户名查询历史借阅记录*/
     @PostMapping("/api/admin/borrow_history_all_accordingDateAndUsername")
     public Result adminSearchAccordingDateAndUsername(@RequestBody @Valid BookBorrow bookBorrow){
         return ResultFactory.buildSuccessResult(bookBorrowService.findByDateAndUsername(bookBorrow));
     }
 
+    /*根据日期查询历史借阅记录*/
     @PostMapping("/api/admin/borrow_history_all_accordingDate")
     public Result adminSearchAccordingDate(BookBorrow bookBorrow){
         return ResultFactory.buildSuccessResult(bookBorrowService.findByDate(bookBorrow));
     }
 
+    /*根据用户名查询历史借阅记录*/
     @PostMapping("/api/admin/borrow_history_all_accordingUsername")
     public Result adminSearchAccordingUsername(@RequestBody @Valid User user){
         String username=user.getUsername();
@@ -100,6 +107,7 @@ public class LibraryController {
             return ResultFactory.buildSuccessResult(bookBorrowService.historyList());
     }
 
+    /*根据类别返回所有书籍*/
     @GetMapping("/api/categories/{cid}/books")
     public Result listByCategory(@PathVariable("cid") int cid) {
         if (0 != cid) {
@@ -109,6 +117,7 @@ public class LibraryController {
         }
     }
 
+    /*上传书籍封面*/
     @PostMapping("/api/admin/content/books/covers")
     public String coversUpload(MultipartFile file) {
         String folder = "D:/workspace/img";

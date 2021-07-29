@@ -16,10 +16,8 @@ import org.springframework.web.util.HtmlUtils;
 import javax.validation.Valid;
 
 /**
- * Login and register controller.
- *
- * @author Evan
- * @date 2019/4
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 @RestController
 public class LoginController {
@@ -27,13 +25,13 @@ public class LoginController {
     @Autowired
     UserService userService;
 
+    /*登录功能*/
     @PostMapping("/api/login")
     public Result login(@RequestBody User requestUser) {
         String username = requestUser.getUsername();
         username = HtmlUtils.htmlEscape(username);
 
         Subject subject = SecurityUtils.getSubject();
-//        subject.getSession().setTimeout(10000);
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, requestUser.getPassword());
         usernamePasswordToken.setRememberMe(true);
         try {
@@ -50,6 +48,7 @@ public class LoginController {
         }
     }
 
+    /*注册功能*/
     @PostMapping("/api/register")
     public Result register(@RequestBody User user) {
         int status = userService.register(user);
@@ -64,6 +63,7 @@ public class LoginController {
         return ResultFactory.buildFailResult("未知错误");
     }
 
+    /*登出功能*/
     @GetMapping("/api/logout")
     public Result logout() {
         Subject subject = SecurityUtils.getSubject();
@@ -71,6 +71,7 @@ public class LoginController {
         return ResultFactory.buildSuccessResult("成功登出");
     }
 
+    /*身份认证*/
     @GetMapping("/api/authentication")
     public String authentication() {
         return "身份认证成功";

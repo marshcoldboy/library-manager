@@ -3,9 +3,8 @@ package com.gm.wj.util;
 import java.util.Random;
 
 /**
- * Utils for handle strings.
- * @author Evan
- * @date 2020/3/2 21:04
+ * @author Team BraveNiuNiu
+ * @date 2021/7
  */
 public class StringUtils {
     public static String getRandomString(int length) {
