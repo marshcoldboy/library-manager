@@ -33,6 +33,7 @@ public class AdminRoleService {
     @Autowired
     AdminMenuService adminMenuService;
 
+    /*返回所有角色的菜单和许可证*/
     public List<AdminRole> listWithPermsAndMenus() {
         List<AdminRole> roles = adminRoleDAO.findAll();
         List<AdminPermission> perms;
@@ -46,15 +47,17 @@ public class AdminRoleService {
         return roles;
     }
 
+    /*返回所有角色*/
     public List<AdminRole> findAll() {
         return adminRoleDAO.findAll();
     }
 
-
+    /*增加或修改角色*/
     public void addOrUpdate(AdminRole adminRole) {
         adminRoleDAO.save(adminRole);
     }
 
+    /*根据用户名返回权限角色*/
     public List<AdminRole> listRolesByUser(String username) {
         int uid = userService.findByUsername(username).getUid();
         List<Integer> rids = adminUserRoleService.listAllByUid(uid)
@@ -62,12 +65,14 @@ public class AdminRoleService {
         return adminRoleDAO.findAllById(rids);
     }
 
+    /*更新角色状态*/
     public AdminRole updateRoleStatus(AdminRole role) {
         AdminRole roleInDB = adminRoleDAO.findById(role.getId());
         roleInDB.setEnabled(role.isEnabled());
         return adminRoleDAO.save(roleInDB);
     }
 
+    /*编辑角色许可证*/
     public void editRole(@RequestBody AdminRole role) {
         adminRoleDAO.save(role);
         adminRolePermissionService.savePermChanges(role.getId(), role.getPerms());

@@ -28,11 +28,9 @@ public class UserService {
     @Autowired
     AdminUserRoleService adminUserRoleService;
 
+    /*返回所有用户列表*/
     public List<UserDTO> list() {
         List<User> users = userDAO.findAll();
-
-        // Find all roles in DB to enable JPA persistence context.
-//        List<AdminRole> allRoles = adminRoleService.findAll();
 
         List<UserDTO> userDTOS = users
                 .stream().map(user -> (UserDTO) new UserDTO().convertFrom(user)).collect(Collectors.toList());
@@ -45,23 +43,28 @@ public class UserService {
         return userDTOS;
     }
 
+    /*根据当前用户返回权限角色列表*/
     public List<AdminRole> roleList(String username){
         return adminRoleService.listRolesByUser(username);
     }
 
+    /*判断用户是否存在*/
     public boolean isExist(String username) {
         User user = userDAO.findByUsername(username);
         return null != user;
     }
 
+    /*根据用户名查询用户*/
     public User findByUsername(String username) {
         return userDAO.findByUsername(username);
     }
 
+    /*根据用户名和密码查询用户*/
     public User get(String username, String password) {
         return userDAO.getByUsernameAndPassword(username, password);
     }
 
+    /*注册用户*/
     public int register(User user) {
         String username = user.getUsername();
         String name = user.getName();
@@ -102,12 +105,14 @@ public class UserService {
         return 1;
     }
 
+    /*更新用户禁用状态*/
     public void updateUserStatus(User user) {
         User userInDB = userDAO.findByUsername(user.getUsername());
         userInDB.setEnabled(user.isEnabled());
         userDAO.save(userInDB);
     }
 
+    /*重设用户密码*/
     public User resetPassword(User user) {
         User userInDB = userDAO.findByUsername(user.getUsername());
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();
@@ -118,6 +123,7 @@ public class UserService {
         return userDAO.save(userInDB);
     }
 
+    /*编辑用户个人信息*/
     public void editUser(User user) {
         User userInDB = userDAO.findByUsername(user.getUsername());
         userInDB.setName(user.getName());
@@ -127,9 +133,11 @@ public class UserService {
         //adminUserRoleService.saveRoleChanges(userInDB.getUid(), user.getRoles());
     }
 
+    /*根据主键删除用户*/
     public void deleteById(int id) {
         userDAO.deleteById(id);
     }
 
+    /*根据用户名删除用户*/
     public void deleteByUsername(String username){userDAO.deleteByUsername(username);}
 }

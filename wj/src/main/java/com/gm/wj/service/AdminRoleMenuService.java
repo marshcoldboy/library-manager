@@ -24,18 +24,22 @@ public class AdminRoleMenuService {
     @Autowired
     AdminRoleMenuDAO adminRoleMenuDAO;
 
+    /*根据rid查询所有记录*/
     public List<AdminRoleMenu> findAllByRid(int rid) {
         return adminRoleMenuDAO.findAllByRid(rid);
     }
 
+    /*根据rid查询所有记录*/
     public List<AdminRoleMenu> findAllByRid(List<Integer> rids) {
         return adminRoleMenuDAO.findAllByRid(rids);
     }
 
+    /*保存具体记录*/
     public void save(AdminRoleMenu rm) {
         adminRoleMenuDAO.save(rm);
     }
 
+    /*更新角色菜单关系*/
     @Modifying
     @Transactional
     public void updateRoleMenu(int rid, Map<String, List<Integer>> menusIds) {
@@ -47,7 +51,6 @@ public class AdminRoleMenuService {
             rm.setRid(rid);
             rms.add(rm);
         }
-
         adminRoleMenuDAO.saveAll(rms);
     }
 }

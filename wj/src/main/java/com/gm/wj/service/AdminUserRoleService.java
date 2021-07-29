@@ -20,11 +20,12 @@ public class AdminUserRoleService {
     @Autowired
     AdminUserRoleDAO adminUserRoleDAO;
 
+    /*根据用户id返回记录*/
     public List<AdminUserRole> listAllByUid(int uid) {
         return adminUserRoleDAO.findAllByUid(uid);
     }
 
-//    @Modifying
+    /*保存新增的记录*/
     @Transactional
     public void saveRoleChanges(int uid, List<AdminRole> roles) {
         adminUserRoleDAO.deleteAllByUid(uid);

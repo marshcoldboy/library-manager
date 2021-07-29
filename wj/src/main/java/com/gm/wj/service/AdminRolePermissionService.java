@@ -19,11 +19,12 @@ public class AdminRolePermissionService {
     @Autowired
     AdminRolePermissionDAO adminRolePermissionDAO;
 
+    /*根据rid查询所有对应记录*/
     List<AdminRolePermission> findAllByRid(int rid) {
         return adminRolePermissionDAO.findAllByRid(rid);
     }
 
-//    @Modifying
+    /*保存修改后的记录*/
     @Transactional
     public void savePermChanges(int rid, List<AdminPermission> perms) {
         adminRolePermissionDAO.deleteAllByRid(rid);

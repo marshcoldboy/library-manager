@@ -25,6 +25,7 @@ public class FineService {
     @Autowired
     BookBorrowService bookBorrowService;
 
+    /*返回当前用户的所有罚款记录*/
     public List<Fine> fineInformation(String username){
         List<Fine> userFine=fineDAO.findAllByUsername(username);
         for(Fine i:userFine)
@@ -37,6 +38,7 @@ public class FineService {
         return userFine;
     }
 
+    /*保存罚款记录*/
     public void save(Fine fine){
         fineDAO.saveAndFlush(fine);
     }
@@ -52,6 +54,7 @@ public class FineService {
         }
     }
 
+    /*刷新所有的罚款记录*/
     public void renew(){
         List<BookBorrow> borrowList=bookBorrowService.historyList();
         List<Fine> fineList=new ArrayList<Fine>();
@@ -65,6 +68,7 @@ public class FineService {
         fineDAO.saveAll(fineList);
     }
 
+    /*根据日期查询罚款记录*/
     public List<Fine> fineAccordingDate(BookBorrow bookBorrow){
         Date startDate=bookBorrow.getStartdate();
         Date returnDate=bookBorrow.getReturndate();

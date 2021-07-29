@@ -24,10 +24,12 @@ public class BookReturnService {
     @Autowired
     BookService bookService;
 
+    /*保存归还记录*/
     public void save(BookReturn bookReturn){
         bookReturnDAO.saveAndFlush(bookReturn);
     }
 
+    /*管理员同意归还请求*/
     public String adminConsent(int borrowId){
         BookBorrow bookBorrow=bookBorrowService.findByBorrowid(borrowId);
 
@@ -49,6 +51,7 @@ public class BookReturnService {
         return  "归还成功";
     }
 
+    /*管理员拒接归还请求*/
     public String adminDeny(int borrowId){
         BookBorrow bookBorrow=bookBorrowService.findByBorrowid(borrowId);
         BookReturn bookReturn=bookReturnDAO.findByBookborrow(bookBorrow);
@@ -59,6 +62,7 @@ public class BookReturnService {
         return "归还被拒绝，请找管理员核对";
     }
 
+    /*列出所有归还请求记录*/
     public List<BookReturn> list(){
         List<BookReturn> bookReturnList=bookReturnDAO.findAll();
         List<BookReturn> result=new ArrayList<>();
@@ -69,8 +73,8 @@ public class BookReturnService {
         return result;
     }
 
+    /*根据借阅记录查询归还请求记录*/
     public BookReturn findByBookBorrow(BookBorrow bookBorrow){
         return bookReturnDAO.findByBookborrow(bookBorrow);
     }
-
 }

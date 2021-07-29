@@ -40,6 +40,7 @@ public class AdminPermissionService {
      * @param requestAPI API requested by client
      * @return true when requestAPI is found in the DB
      */
+    /*判断需要的接口是否在数据库中*/
     public boolean needFilter(String requestAPI) {
         List<AdminPermission> ps = adminPermissionDAO.findAll();
         for (AdminPermission p: ps) {
@@ -51,12 +52,14 @@ public class AdminPermissionService {
         return false;
     }
 
+    /*根据rid返回所有相应许可证*/
     public List<AdminPermission> listPermsByRoleId(int rid) {
         List<Integer> pids = adminRolePermissionService.findAllByRid(rid)
                 .stream().map(AdminRolePermission::getPid).collect(Collectors.toList());
         return adminPermissionDAO.findAllById(pids);
     }
 
+    /*根据用户名返回许可证URL*/
     public Set<String> listPermissionURLsByUser(String username) {
         List<Integer> rids = adminRoleService.listRolesByUser(username)
                 .stream().map(AdminRole::getId).collect(Collectors.toList());

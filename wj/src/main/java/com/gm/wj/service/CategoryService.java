@@ -19,11 +19,13 @@ public class CategoryService {
     @Autowired
     CategoryDAO categoryDAO;
 
+    /*返回所有记录根据主键的降序排列*/
     public List<Category> list() {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         return categoryDAO.findAll(sort);
     }
 
+    /*根据主键返回对应记录*/
     public Category get(int id) {
         Category c= categoryDAO.findById(id).orElse(null);
         return c;

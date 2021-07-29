@@ -25,6 +25,7 @@ public class BookBorrowService {
 
     Calendar calendar=new GregorianCalendar();
 
+    /*增加新借阅记录*/
     public void add(BookBorrow bookborrow){
         Date startDate=new Date(System.currentTimeMillis());
         calendar.setTime(startDate);
@@ -36,10 +37,12 @@ public class BookBorrowService {
         bookBorrowDAO.saveAndFlush(bookborrow);
     }
 
+    /*返回当前用户的借阅列表*/
     public List<BookBorrow> list(String username){
         return(bookBorrowDAO.findAllByUsername(username));
     }
 
+    /*返回当前用户的正在借阅图书列表*/
     public List<BookBorrow> nowList(String username){
         List<BookBorrow> bookBorrowList=bookBorrowDAO.findAllByUsername(username);
         List<BookBorrow> result=new ArrayList<BookBorrow>();
@@ -48,12 +51,15 @@ public class BookBorrowService {
             if(bookBorrow.getReturndate()==null) {
                 int days=(int) ((bookBorrow.getEnddate().getTime() - date.getTime()) / (24 * 60 * 60 * 1000));
                 bookBorrow.setDays(Math.max(days, 0));
+                if(days<0)
+                    bookBorrow.setStatus("借阅逾期");
                 result.add(bookBorrow);
             }
         }
         return result;
     }
 
+    /*返回所有用户的正在借阅图书列表*/
     public List<BookBorrow> nowList(){
         List<BookBorrow> bookBorrowList=bookBorrowDAO.findAll();
         List<BookBorrow> result=new ArrayList<BookBorrow>();
@@ -67,6 +73,7 @@ public class BookBorrowService {
         return result;
     }
 
+    /*返回当前用户的历史借阅记录*/
     public List<BookBorrow> historyList(String username){
         List<BookBorrow> bookBorrowList=bookBorrowDAO.findAllByUsername(username);
         List<BookBorrow> result=new ArrayList<BookBorrow>();
@@ -78,6 +85,7 @@ public class BookBorrowService {
         return result;
     }
 
+    /*返回所有用户的历史借阅记录*/
     public List<BookBorrow> historyList(){
         List<BookBorrow> bookBorrowList=bookBorrowDAO.findAll();
         List<BookBorrow> result=new ArrayList<BookBorrow>();
@@ -89,6 +97,7 @@ public class BookBorrowService {
         return result;
     }
 
+    /*发送归还借阅书籍请求*/
     public BookBorrow returnBook(int borrow_id){
         BookBorrow bookBorrow=bookBorrowDAO.findByBorrowid(borrow_id);
         bookBorrow.setStatus("申请归还中，等待管理员审核");
@@ -103,6 +112,7 @@ public class BookBorrowService {
         return bookBorrow;
     }
 
+    /*续借书籍请求*/
     public Boolean renewBook(int borrow_id){
         BookBorrow bookBorrow=bookBorrowDAO.findByBorrowid(borrow_id);
         Date startDate=bookBorrow.getStartdate();
@@ -119,10 +129,12 @@ public class BookBorrowService {
         return true;
     }
 
+    /*根据borrowid返回借阅记录*/
     public BookBorrow findByBorrowid(int borrow_id){
         return bookBorrowDAO.findByBorrowid(borrow_id);
     }
 
+    /*返回用户根据日期查询的借阅记录*/
     public List<BookBorrow> findByDateAndUsername(BookBorrow bookBorrow){
         Date startDate=bookBorrow.getStartdate();
         Date returnDate=bookBorrow.getReturndate();
@@ -143,6 +155,7 @@ public class BookBorrowService {
         return result;
     }
 
+    /*根据日期查询借阅记录*/
     public List<BookBorrow> findByDate(BookBorrow bookBorrow){
         Date startDate=bookBorrow.getStartdate();
         Date returnDate=bookBorrow.getReturndate();
@@ -155,6 +168,7 @@ public class BookBorrowService {
         return result;
     }
 
+    /*保存借阅记录*/
     public void save(BookBorrow bookBorrow){
         bookBorrowDAO.saveAndFlush(bookBorrow);
     }
