@@ -27,7 +27,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
+      <div class="card-panel" @click="pushToCheck()">
         <div class="card-panel-icon-wrapper icon-message">
           <i class="el-icon-message" style="font-size: 50px"></i>
         </div>
@@ -74,6 +74,9 @@ export default {
     this.load()
   },
   methods: {
+    pushToCheck () {
+      this.$router.push('./content/borrowcheck')
+    },
     handleSetLineChartData (type) {
       this.$emit('handleSetLineChartData', type)
     },
