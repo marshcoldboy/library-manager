@@ -82,7 +82,7 @@
                 this.clear()
                 this.$emit('onSubmit')
               } else {
-                this.$alert(resp.data.message, '提示', {
+                this.$alert('请输入正确信息', '提示', {
                   confirmButtonText: '确定'
                 })
               }
