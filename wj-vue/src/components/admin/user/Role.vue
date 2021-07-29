@@ -44,6 +44,8 @@
         :data="roles"
         stripe
         style="width: 100%"
+        ref="checkBoxTable"
+        @selection-change="handleSelectionChange"
         :max-height="tableHeight">
         <el-table-column
           type="selection"
@@ -95,18 +97,16 @@
         </el-table-column>
       </el-table>
       <div style="margin: 20px 0 20px 0;float: left">
-        <el-button>取消选择</el-button>
-        <el-button>批量删除</el-button>
+        <el-button @click="cancelSelection()">取消选择</el-button>
+        <el-button @click="deleteSelectedBooks()">批量删除</el-button>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
-  import RoleCreate from './RoleCreate'
   export default {
     name: 'UserRole',
-    components: {RoleCreate},
     data () {
       return {
         dialogFormVisible: false,
@@ -120,7 +120,8 @@
           id: 'id',
           label: 'nameZh',
           children: 'children'
-        }
+        },
+        multipleSelection: []
       }
     },
     mounted () {
@@ -240,6 +241,15 @@
           if (resp && resp.data.code === 200) {
             console.log(resp.data.result)
           }
+        })
+      },
+      cancelSelection (rows) { // 取消删除
+        this.$refs.checkBoxTable.clearSelection()
+      },
+      handleSelectionChange (val) {
+        this.multipleSelection = []
+        val.forEach(item => {
+          this.multipleSelection.push(item.bid)
         })
       }
     }
